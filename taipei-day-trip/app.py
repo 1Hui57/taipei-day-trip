@@ -105,6 +105,20 @@ async def api_attraction_attractionId(request:Request,attractionId:Annotated[int
 	else:
 		return JSONResponse(status_code=400,content={"error":True,"message":"您所查詢的景點編號不存在。"})
 
+@app.get("/api/mrts")
+async def get_mrt(request:Request):
+	cursor=con.cursor()
+	cursor.execute("SELECT mrt,COUNT(mrt) FROM attractions GROUP BY mrt ORDER BY COUNT(mrt) DESC")
+	mrtData=cursor.fetchall()
+	data=[]
+	for item in mrtData:
+		if item[0]:
+			data.append(item[0])
+		else:
+			continue
+	return {"data":data}
+
+
 
 # Static Pages (Never Modify Code in this Block)
 @app.get("/", include_in_schema=False)
