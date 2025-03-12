@@ -14,15 +14,19 @@ con=mysql.connector.connect(
     database="taipei_day_trip"
 )
 
-# 優化/api/attractions
-# 定義一個函式，可以根據要求字串抓取資料
+# 定義一個函式，可以根據要求字串抓取資料包括所有符合資料的圖片url
 def getAttractionData(cursor, keyword=None, pageStartFrom=0, attractionId=None):
 	if keyword:
-		cursor.execute("SELECT * FROM attractions WHERE name=%s OR mrt LIKE %s ORDER BY id ASC LIMIT %s, %s",[keyword,'%'+keyword+'%',pageStartFrom,12])
+		cursor.execute("SELECT attractions.*, GROUP_CONCAT(attractions_images.url SEPARATOR ',')"
+		"as images FROM attractions LEFT JOIN attractions_images  ON attractions.id=attractions_images.attractions_id "
+		"WHERE mrt=%s OR name LIKE %s GROUP BY attractions.id ORDER BY attractions.id ASC LIMIT %s, %s",[keyword,'%'+keyword+'%',pageStartFrom,12])
 	elif attractionId:
-		cursor.execute("SELECT * FROM attractions WHERE id=%s",[attractionId])
+		cursor.execute("SELECT attractions.*, GROUP_CONCAT(attractions_images.url SEPARATOR ',')"
+		"as images FROM attractions LEFT JOIN attractions_images  ON attractions.id=attractions_images.attractions_id WHERE attractions.id=%s",[attractionId])
 	else:
-		cursor.execute("SELECT * FROM attractions ORDER BY id ASC LIMIT %s, %s",[pageStartFrom,12])
+		cursor.execute("SELECT attractions.*, GROUP_CONCAT(attractions_images.url SEPARATOR ',')"
+		"as images FROM attractions LEFT JOIN attractions_images  ON attractions.id=attractions_images.attractions_id "
+		" GROUP BY attractions.id ORDER BY attractions.id ASC LIMIT %s, %s",[pageStartFrom,12])
 	return cursor.fetchall()
 
 # 定義一個函式，可以根據要求字串抓取資料總筆數
@@ -33,13 +37,6 @@ def getAttractionNumber(cursor, keyword):
 		cursor.execute("SELECT COUNT(id) FROM  attractions")
 	return cursor.fetchone()
 
-# 定義一個函式，可以抓取圖片url
-def getAttractionImg(cursor,attractions_id):
-	cursor.execute("SELECT url FROM attractions_images WHERE attractions_id=%s",[attractions_id])
-	resultsUrls=cursor.fetchall()# 拿到的url資料會是tuple形式
-	imageUrl= [url[0] for url in resultsUrls] # 將url資料轉換為list
-	return imageUrl
-	 
 @app.get("/api/attractions")
 async def api_attractions(
 	request: Request,
@@ -54,8 +51,7 @@ async def api_attractions(
 	if results:
 		data=[]
 		for item in results:
-			cursor=con.cursor()
-			images=getAttractionImg(cursor,item[0])
+			images=item[9].split(',')
 			data.append({
 					"id":item[0],
 					"name":item[1],
@@ -82,13 +78,12 @@ async def api_attractions(
 async def validation_exception_handler(request:Request, exc:RequestValidationError):
 	return JSONResponse(status_code=500,content={"error":True,"message":"請輸入正確的查詢資料。"})
 
-
 @app.get("/api/attraction/{attractionId}")		
 async def api_attraction_attractionId(request:Request,attractionId:Annotated[int, Path(gt=0)]):
 	cursor=con.cursor()
 	results=getAttractionData(cursor,keyword=None,pageStartFrom=0,attractionId=attractionId)
-	images=getAttractionImg(cursor,attractions_id=attractionId)
-	if results and images:
+	if results[0][0] is not None:
+		images=results[0][9].split(',')
 		data={
 			"id":results[0][0],
 			"name":results[0][1],
@@ -117,8 +112,6 @@ async def get_mrt(request:Request):
 		else:
 			continue
 	return {"data":data}
-
-
 
 # Static Pages (Never Modify Code in this Block)
 @app.get("/", include_in_schema=False)
