@@ -11,7 +11,8 @@ con=mysql.connector.connect(
     user="root",
     password="123456789",
     host="localhost",
-    database="taipei_day_trip"
+    database="taipei_day_trip",
+	charset="utf8mb4"
 )
 
 # 定義一個函式，可以根據要求字串抓取資料包括所有符合資料的圖片url
@@ -32,7 +33,7 @@ def getAttractionData(cursor, keyword=None, pageStartFrom=0, attractionId=None):
 # 定義一個函式，可以根據要求字串抓取資料總筆數
 def getAttractionNumber(cursor, keyword):
 	if keyword:
-		cursor.execute("SELECT COUNT(*) FROM  attractions WHERE name=%s OR mrt LIKE %s",[keyword, '%'+keyword+'%'])
+		cursor.execute("SELECT COUNT(*) FROM  attractions WHERE mrt=%s OR name LIKE %s",[keyword, '%'+keyword+'%'])
 	else:
 		cursor.execute("SELECT COUNT(id) FROM  attractions")
 	return cursor.fetchone()
