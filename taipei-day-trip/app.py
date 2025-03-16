@@ -1,6 +1,7 @@
 import math
 from fastapi import *
 from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.exceptions import RequestValidationError
 from typing import Annotated, Optional
 import mysql.connector
@@ -141,3 +142,6 @@ async def booking(request: Request):
 @app.get("/thankyou", include_in_schema=False)
 async def thankyou(request: Request):
 	return FileResponse("./static/thankyou.html", media_type="text/html")
+
+# 建立靜態檔案資料夾
+app.mount("/public", StaticFiles(directory="public"))

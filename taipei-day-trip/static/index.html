@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Taipei Day Trip 台北一日遊</title>
-    <link rel="stylesheet" href="desktop.css" />
-    <link rel="stylesheet" href="attractions.css" />
+    <link rel="stylesheet" href="/public/desktop.css" />
+    <link rel="stylesheet" href="/public/attractions.css" />
     <!-- Noto Sans TC -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,18 +25,18 @@
       </div>
     </div>
     <div id="hero-section" class="hero-section">
-      <img src="picture/welcome.png" alt="loading..." />
+      <img src="/public/picture/welcome.png" alt="loading..." />
     </div>
     <div class="main">
       <div class="main__list-bar">
         <div class="list-bar__container list-bar__container--left">
           <div class="list-bar__arrow">
-            <img src="picture/arrow left.png" id="leftArrow" />
+            <img src="/public/picture/arrow left.png" id="leftArrow" />
           </div>
         </div>
         <div class="list-bar__container list-bar__container--center">
           <div id="listItem-container" class="listItem-container">
-            <div class="listItem-container__listItem">淡水</div>
+            <!-- <div class="listItem-container__listItem">淡水</div>
             <div class="listItem-container__listItem">士林</div>
             <div class="listItem-container__listItem">劍潭</div>
             <div class="listItem-container__listItem">新北投</div>
@@ -56,12 +56,12 @@
             <div class="listItem-container__listItem">台北橋</div>
             <div class="listItem-container__listItem">台北橋</div>
             <div class="listItem-container__listItem">台北橋</div>
-            <div class="listItem-container__listItem">台北橋</div>
+            <div class="listItem-container__listItem">台北橋</div> -->
           </div>
         </div>
         <div class="list-bar__container list-bar__container--right">
           <div class="list-bar__arrow">
-            <img src="picture/arrow right .png" id="rightArrow" />
+            <img src="/public/picture/arrow right .png" id="rightArrow" />
           </div>
         </div>
       </div>
@@ -70,9 +70,9 @@
           class="attractions__attractions-group"
           id="attractions__attractions-group"
         >
-          <div class="attractions-group__attraction">
+          <!-- <div class="attractions-group__attraction">
             <div class="attraction__container">
-              <img src="picture/平安鐘.png" alt="" />
+              <img src="/public/picture/平安鐘.png" alt="" />
               <div class="container__details">
                 <div class="container__details__info">
                   <div>平安鐘</div>
@@ -84,26 +84,45 @@
                 <div class="Body_Med_16">忠孝復興</div>
                 <div class="Body_Med_16 justify-content-end">公共藝術</div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
     </div>
     <script>
       let mrt = [
-        "淡水",
-        "士林",
-        "劍潭",
         "新北投",
-        "台大醫院",
-        "三重",
-        "菜寮",
-        "台北橋",
-        "大橋頭",
+        "劍潭",
+        "關渡",
+        "動物園",
+        "龍山寺",
         "中山",
-        "中山國小",
-        "徐匯廣場",
-        "頭前庄",
+        "圓山",
+        "雙連",
+        "士林",
+        "忠孝新生",
+        "臺大醫院",
+        "中正紀念堂",
+        "市政府",
+        "象山",
+        "行天宮",
+        "台北101／世貿",
+        "松江南京",
+        "唭哩岸",
+        "國父紀念館",
+        "文德",
+        "大安森林公園",
+        "大湖公園",
+        "大直",
+        "石牌",
+        "忠義",
+        "西門",
+        "松山",
+        "北投",
+        "葫洲",
+        "木柵",
+        "芝山",
+        "公館",
       ];
 
       let attractions = {
@@ -205,7 +224,7 @@
         }
         requestAnimationFrame(scroll);
       }
-      // 將scroll bar的滑動函式添加到button事件監聽 
+      // 將scroll bar的滑動函式添加到button事件監聽
       document
         .getElementById("leftArrow")
         .addEventListener("click", function () {
@@ -227,8 +246,10 @@
       // 透過拿到的資料載入attration DOM 的函式
       function loadAttractions() {
         let attractionsNum = attractions["data"].length;
-          // 父節點DOM
-          let attractionsGroupDOM = document.getElementById("attractions__attractions-group");
+        // 父節點DOM
+        let attractionsGroupDOM = document.getElementById(
+          "attractions__attractions-group"
+        );
         // 加入新景點
         for (let i = 0; i < attractionsNum; i++) {
           // 新增attraction DOM div
@@ -266,40 +287,50 @@
           newAttractionDOM.appendChild(newAttractionContainer);
           newAttractionContainer.appendChild(newAttractiomImg);
           // 加入圖片url
-          newAttractiomImg.src=attractions["data"][i]["images"][0]
+          newAttractiomImg.src = attractions["data"][i]["images"][0];
           newAttractionContainer.appendChild(newContainerDetails);
           newContainerDetails.appendChild(newContainerDetailsInfo);
           newContainerDetailsInfo.appendChild(newAttractionName);
           // 加入景點名稱
-          let newNameText =document.createTextNode(attractions["data"][i]["name"]);
+          let newNameText = document.createTextNode(
+            attractions["data"][i]["name"]
+          );
           newAttractionName.appendChild(newNameText);
           newAttractionDOM.appendChild(newAttractionDetail);
           newAttractionDetail.appendChild(newDetailsInfo);
           newDetailsInfo.appendChild(newMrtName);
           // 加入mrt
-          let newMrtText=document.createTextNode(attractions["data"][i]["mrt"]);
+          let newMrtText = document.createTextNode(
+            attractions["data"][i]["mrt"]
+          );
           newMrtName.appendChild(newMrtText);
           newDetailsInfo.appendChild(newCategory);
           // 加入景點種類
-          let newCategoryText = document.createTextNode(attractions["data"][i]["category"]);
+          let newCategoryText = document.createTextNode(
+            attractions["data"][i]["category"]
+          );
           newCategory.appendChild(newCategoryText);
         }
       }
-      if (attractions) {loadAttractions()};
+      if (attractions) {
+        loadAttractions();
+      }
 
       // 新增bar list 的捷運站列表
-      function loadMrtList(){
-        let listItemContainer=document.getElementById("listItem-container");
+      function loadMrtList() {
+        let listItemContainer = document.getElementById("listItem-container");
         let mrtNum = mrt.length;
-        for (let i=0;i<mrtNum;i++){
+        for (let i = 0; i < mrtNum; i++) {
           let newListItem = document.createElement("div");
-          newListItem.className="listItem-container__listItem";
+          newListItem.className = "listItem-container__listItem";
           let newListItemName = document.createTextNode(mrt[i]);
           newListItem.appendChild(newListItemName);
           listItemContainer.appendChild(newListItem);
         }
       }
-      if (mrt){loadMrtList()};
+      if (mrt) {
+        loadMrtList();
+      }
     </script>
   </body>
 </html>
