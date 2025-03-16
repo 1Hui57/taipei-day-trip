@@ -205,7 +205,7 @@
         }
         requestAnimationFrame(scroll);
       }
-
+      // 將scroll bar的滑動函式添加到button事件監聽 
       document
         .getElementById("leftArrow")
         .addEventListener("click", function () {
@@ -260,8 +260,6 @@
           // 新增景點分類 DOM
           let newCategory = document.createElement("div");
           newCategory.className = "Body_Med_16 justify-content-end";
-          // // 新增文字節點
-          // let newTextNode = document.createTextNode()
 
           // 組合DOM
           attractionsGroupDOM.appendChild(newAttractionDOM);
@@ -287,7 +285,21 @@
           newCategory.appendChild(newCategoryText);
         }
       }
-      loadAttractions();
+      if (attractions) {loadAttractions()};
+
+      // 新增bar list 的捷運站列表
+      function loadMrtList(){
+        let listItemContainer=document.getElementById("listItem-container");
+        let mrtNum = mrt.length;
+        for (let i=0;i<mrtNum;i++){
+          let newListItem = document.createElement("div");
+          newListItem.className="listItem-container__listItem";
+          let newListItemName = document.createTextNode(mrt[i]);
+          newListItem.appendChild(newListItemName);
+          listItemContainer.appendChild(newListItem);
+        }
+      }
+      if (mrt){loadMrtList()};
     </script>
   </body>
 </html>
