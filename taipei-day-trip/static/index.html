@@ -13,6 +13,8 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap"
       rel="stylesheet"
     />
+    <script src="/public/mrtList.js" defer></script>
+    <script src="/public/attractions.js" defer></script>
   </head>
   <body>
     <div id="navigation" class="navbar">
@@ -26,6 +28,22 @@
     </div>
     <div id="hero-section" class="hero-section">
       <img src="/public/picture/welcome.png" alt="loading..." />
+      <div class="slogan">
+        <div class="slogan__content">
+          <div class="slogan__content__slogan">
+            <div class="Header_1_Bold_28">輕鬆享受台北一日悠閒</div>
+            <div class="">探索每個角落，體驗城市的深度旅遊行程</div>
+          </div>
+          <div class="slogan__content__search">
+            <div class="search__searchBar">
+              <input type="text">
+              <div class="searchBar__btn">
+                <img src="" alt="" id="searchIcon">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="main">
       <div class="main__list-bar">
@@ -36,27 +54,6 @@
         </div>
         <div class="list-bar__container list-bar__container--center">
           <div id="listItem-container" class="listItem-container">
-            <!-- <div class="listItem-container__listItem">淡水</div>
-            <div class="listItem-container__listItem">士林</div>
-            <div class="listItem-container__listItem">劍潭</div>
-            <div class="listItem-container__listItem">新北投</div>
-            <div class="listItem-container__listItem">台大醫院</div>
-            <div class="listItem-container__listItem">三重</div>
-            <div class="listItem-container__listItem">菜寮</div>
-            <div class="listItem-container__listItem">台北橋</div>
-            <div class="listItem-container__listItem">台北橋</div>
-            <div class="listItem-container__listItem">台北橋</div>
-            <div class="listItem-container__listItem">台北橋</div>
-            <div class="listItem-container__listItem">台北橋</div>
-            <div class="listItem-container__listItem">台北橋</div>
-            <div class="listItem-container__listItem">台北橋</div>
-            <div class="listItem-container__listItem">台北橋</div>
-            <div class="listItem-container__listItem">台北橋</div>
-            <div class="listItem-container__listItem">台北橋</div>
-            <div class="listItem-container__listItem">台北橋</div>
-            <div class="listItem-container__listItem">台北橋</div>
-            <div class="listItem-container__listItem">台北橋</div>
-            <div class="listItem-container__listItem">台北橋</div> -->
           </div>
         </div>
         <div class="list-bar__container list-bar__container--right">
@@ -70,267 +67,13 @@
           class="attractions__attractions-group"
           id="attractions__attractions-group"
         >
-          <!-- <div class="attractions-group__attraction">
-            <div class="attraction__container">
-              <img src="/public/picture/平安鐘.png" alt="" />
-              <div class="container__details">
-                <div class="container__details__info">
-                  <div>平安鐘</div>
-                </div>
-              </div>
-            </div>
-            <div class="attraction__details">
-              <div class="details__info">
-                <div class="Body_Med_16">忠孝復興</div>
-                <div class="Body_Med_16 justify-content-end">公共藝術</div>
-              </div>
-            </div> -->
+
           </div>
         </div>
       </div>
     </div>
-    <script>
-      let mrt = [
-        "新北投",
-        "劍潭",
-        "關渡",
-        "動物園",
-        "龍山寺",
-        "中山",
-        "圓山",
-        "雙連",
-        "士林",
-        "忠孝新生",
-        "臺大醫院",
-        "中正紀念堂",
-        "市政府",
-        "象山",
-        "行天宮",
-        "台北101／世貿",
-        "松江南京",
-        "唭哩岸",
-        "國父紀念館",
-        "文德",
-        "大安森林公園",
-        "大湖公園",
-        "大直",
-        "石牌",
-        "忠義",
-        "西門",
-        "松山",
-        "北投",
-        "葫洲",
-        "木柵",
-        "芝山",
-        "公館",
-      ];
-
-      let attractions = {
-        nextPage: null,
-        data: [
-          {
-            id: 6,
-            name: "陽明山溫泉區",
-            category: "養生溫泉",
-            description:
-              "陽明山舊稱草山，因紀念明朝學者王陽明而改名為陽明山，它是臺北的都市後花園，位居近郊，是大家很方便就可以遠離塵囂，休閒的好去處。由於它位居火山地帶，特殊的火山地形及地質構造，造就了這一區的溫泉景觀。陽明山溫泉大致可分為4個區域：陽明山國家公園周邊、冷水坑、馬槽及火庚子坪，由於地熱運動頻繁，這4個區域溫泉所含的礦物成分都不同，使得其水溫、泉質與療效也大不相同。 陽明山位於大屯火山區，溫泉在陽明山風景區內，分前山溫泉和後山溫泉兩塊，有很多溫泉旅館，加上山上眾多風景區和美食，很適合兩天一夜的登山遊園泡湯之旅。",
-            address: "臺北市  北投區竹子湖路1之20號",
-            transport:
-              "捷運站名：捷運劍潭站，轉乘260、紅5公車至陽明山站。公車：109、260、260(區間車)、小9、小9(區間車)、紅5至陽明山站。",
-            mrt: "劍潭",
-            lat: 25.15579,
-            lng: 121.547742,
-            images: [
-              "https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000985.jpg",
-              "https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000987.jpg",
-            ],
-          },
-          {
-            id: 34,
-            name: "社子島環島與二重疏洪道自行車道",
-            category: "單車遊蹤",
-            description:
-              "社子島位於基隆河與淡水河之交匯處，地質為沙洲型態，該地區處處可見稻田橫亙，菜園綠茵，展現老農村民風純樸的美麗景緻。該地區利用堤頂建設自行車道，吸引許多自行車愛好者前往，社子島沙洲沙尾可以看見基隆和與淡水河交匯波濤澎湃的景象，每當夕陽西下，金黃色落日餘暉揮灑在河面上閃閃動人，遠眺大屯山及觀音山綿延天邊的景緻，教人美不勝收。往南還可銜接百齡橋左岸自行車，這裡有許多大型的各式球場，而且經常可以看見國內外著名的球隊在此練球，騎乘之餘欣賞開闊的運動廣場人群，既充實又熱鬧。二重疏洪道環狀自行車道全長24公里，穿越堤頂道路進入公園區域，不同主題的河濱綠地，可以花上很多時間去探險。",
-            address: "臺北市  士林區延平北路七段",
-            transport:
-              "捷運站名：捷運劍潭站，轉乘紅7、紅10僑美站下車，步行約10分鐘，可抵社子島腳踏車道。；租車資訊：1.社子花卉廣場設有民間經營的腳踏車租借站。 2.由大稻埕碼頭租借站租車後前往。 3.二重疏洪親水公園設有腳踏車租借站。1.公車:2、215、246、536、紅10，於僑美站下車即可抵達社子島腳踏車道 2.開車： * 往臺北市區前往，可走三重環河道路，穿越提頂道路即可抵達。 * 由臺北市區前往，可沿延平北路北行，至七段處越過社子島入口頸子口（社子國小），即可抵達腳踏車道入口處。",
-            mrt: "劍潭",
-            lat: 25.08952,
-            lng: 121.503137,
-            images: [
-              "https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000846.jpg",
-              "https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000847.jpg",
-              "https://www.travel.taipei/d_upload_ttn/sceneadmin/image/A0/B0/C0/D10/E903/F337/b20fd104-4a48-439d-8300-65be9ab24e27.jpg",
-              "https://www.travel.taipei/d_upload_ttn/sceneadmin/image/A0/B0/C0/D23/E53/F712/c18b5603-0fd6-4f4f-b7b7-c61dfe4c7c62.jpg",
-              "https://www.travel.taipei/d_upload_ttn/sceneadmin/image/A0/B0/C0/D28/E492/F539/c008d311-b347-4b26-9bae-e97f02614580.jpg",
-            ],
-          },
-          {
-            id: 49,
-            name: "國立臺灣科學教育館",
-            category: "藝文館所",
-            description:
-              "臺灣科學教育館，為科學教育而設，適合所有大人小孩來參觀。地下室為兒童益智探索館，還有一個地底世界展，3, 4樓有生命科學、自然科學展，5, 6樓有物質科學、數學與地球科學展，7, 8樓為特展，可以看到世界性的科學展覽。館內設有各種體驗裝置，可與展品互動。 在這也可看電影，3D動感電影院是一個動感模擬影院，雙人式液壓動感座椅，與影像同步動作，有如坐在雲宵飛車或飛行座艙上，身歷其境。立體虛擬實境劇場，採用高解析立體影像效果，讓觀看影片更有臨場感。這是個寓教於樂的優良場所，歡迎大家來玩。 ",
-            address: "臺北市  士林區士商路189號",
-            transport:
-              "捷運劍潭站(1號出口左方公車站牌) ⇒ 轉搭公車至科學教育館站下車 ⇒ 紅30(低地板公車)、41捷運士林站(1號出口過馬路) ⇒轉搭公車至科學教育館站下車 ⇒紅30(低地板公車)、紅12、620(低地板公車)公車：紅12、紅30(低地板公車)、41、620(低地板公車) 科學教育館站下車255區間車 529 士林高商站下國道巴士：中興巴士　[士林-中壢] 路線光華巴士(基隆客運)　[士林-基隆] 路線1.公車：41、紅3、紅12、紅30至天文館站（士林行政中心站），255、250、620、紅12至士林區行政中心站(士林高商站)，620、紅3、紅12至科教館站 2.車位：備有地下收費停車場424個",
-            mrt: "劍潭",
-            lat: 25.0959,
-            lng: 121.5159,
-            images: [
-              "https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000729.jpg",
-              "https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000730.jpg",
-              "https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000731.jpg",
-            ],
-          },
-          {
-            id: 55,
-            name: "陽明山中山樓",
-            category: "歷史建築",
-            description:
-              "陽明山國家公園內的中山樓，是蔣介石總統在位時，為了紀念國父孫中山先生百年誕辰，於1965年所興建，由名建築師修澤蘭女士規劃，位於群山環抱的綠意之中，外表為中國傳統古典式建築，內部陳設典雅細緻，過去是國民大會的會場，並為國家元首接待外賓或舉辦國宴的重要場地，如今已被指定為市立古蹟，並開放場地租借及參觀導覽，是一座具有歷史紀念價值的建築物。 參觀導覽 02-2861-6391 / 場地租借 02-2861-0565",
-            address: "臺北市  北投區陽明路2段15號",
-            transport:
-              "捷運劍潭站轉乘紅5、260至教師研習站下車到達公車－每日行駛：&nbsp;中山樓正門站─260 &nbsp;(說明：駛入園區直接停於本樓)中山樓站─260、681、紅5、1717(皇家客運) &nbsp;(說明：停於園區門口，步行5分鐘至本樓)陽明山站─230、303、小8、小9 &nbsp;(說明：步行5分鐘至園區門口，在步行5分至本樓)假日行駛：中山樓站─109、111、128 &nbsp;(說明：停於園區門口，步行5分鐘至本樓)陽明山站─129 &nbsp;(說明：步行5分鐘至園區門口，在步行5分至本樓)&nbsp;",
-            mrt: "劍潭",
-            lat: 25.155623,
-            lng: 121.552772,
-            images: [
-              "https://www.travel.taipei/d_upload_ttn/sceneadmin/image/A0/B0/C0/D370/E882/F626/420c6cf8-45c6-4c31-8e0a-42d44a1a5eac.jpg",
-              "https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11003127.jpg",
-              "https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11003128.jpg",
-              "https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11003129.jpg",
-            ],
-          },
-        ],
-      };
-
-      // 寫一個函式可以讓listItem-container滑順的移動，此功能會以button事件監聽並呼叫
-      function smoothScroll(element, scrollTo, duration) {
-        let startTime = performance.now();
-        let statrScrollPosition =
-          document.getElementById("listItem-container").scrollLeft;
-        //再寫一個函式是從一個位置移動到另一個位置的每一偵執行的動作
-        function scroll() {
-          let now = performance.now();
-          let timePercent = Math.min(1, (now - startTime) / duration); //動畫的進度的百分比
-          // let timeFunction = time * (2 - time);
-          element.scrollLeft =
-            timePercent * (scrollTo - statrScrollPosition) +
-            statrScrollPosition;
-          if (timePercent < 1) {
-            requestAnimationFrame(scroll);
-          }
-        }
-        requestAnimationFrame(scroll);
-      }
-      // 將scroll bar的滑動函式添加到button事件監聽
-      document
-        .getElementById("leftArrow")
-        .addEventListener("click", function () {
-          let listItem_container =
-            document.getElementById("listItem-container");
-          let scrollTo = listItem_container.scrollLeft - 200;
-          smoothScroll(listItem_container, scrollTo, 600);
-        });
-
-      document
-        .getElementById("rightArrow")
-        .addEventListener("click", function () {
-          let listItem_container =
-            document.getElementById("listItem-container");
-          let scrollTo = listItem_container.scrollLeft + 200;
-          smoothScroll(listItem_container, scrollTo, 600);
-        });
-
-      // 透過拿到的資料載入attration DOM 的函式
-      function loadAttractions() {
-        let attractionsNum = attractions["data"].length;
-        // 父節點DOM
-        let attractionsGroupDOM = document.getElementById(
-          "attractions__attractions-group"
-        );
-        // 加入新景點
-        for (let i = 0; i < attractionsNum; i++) {
-          // 新增attraction DOM div
-          let newAttractionDOM = document.createElement("div");
-          newAttractionDOM.className = "attractions-group__attraction";
-          // 新增 attraction__container DOM div
-          let newAttractionContainer = document.createElement("div");
-          newAttractionContainer.className = "attraction__container";
-          // 新增attraction img
-          let newAttractiomImg = document.createElement("img");
-          // 新增 container__Details DOM div
-          let newContainerDetails = document.createElement("div");
-          newContainerDetails.className = "container__details";
-          // 新增container__details__info DOM div
-          let newContainerDetailsInfo = document.createElement("div");
-          newContainerDetailsInfo.className = "container__details__info";
-          // 新增 info內的div放景點名稱
-          let newAttractionName = document.createElement("div");
-
-          // 新增attraction__details DOM div
-          let newAttractionDetail = document.createElement("div");
-          newAttractionDetail.className = "attraction__details";
-          // 新增 新增 details__info DOM div
-          let newDetailsInfo = document.createElement("div");
-          newDetailsInfo.className = "details__info";
-          // 新增捷運站名稱DOM
-          let newMrtName = document.createElement("div");
-          newMrtName.className = "Body_Med_16";
-          // 新增景點分類 DOM
-          let newCategory = document.createElement("div");
-          newCategory.className = "Body_Med_16 justify-content-end";
-
-          // 組合DOM
-          attractionsGroupDOM.appendChild(newAttractionDOM);
-          newAttractionDOM.appendChild(newAttractionContainer);
-          newAttractionContainer.appendChild(newAttractiomImg);
-          // 加入圖片url
-          newAttractiomImg.src = attractions["data"][i]["images"][0];
-          newAttractionContainer.appendChild(newContainerDetails);
-          newContainerDetails.appendChild(newContainerDetailsInfo);
-          newContainerDetailsInfo.appendChild(newAttractionName);
-          // 加入景點名稱
-          let newNameText = document.createTextNode(
-            attractions["data"][i]["name"]
-          );
-          newAttractionName.appendChild(newNameText);
-          newAttractionDOM.appendChild(newAttractionDetail);
-          newAttractionDetail.appendChild(newDetailsInfo);
-          newDetailsInfo.appendChild(newMrtName);
-          // 加入mrt
-          let newMrtText = document.createTextNode(
-            attractions["data"][i]["mrt"]
-          );
-          newMrtName.appendChild(newMrtText);
-          newDetailsInfo.appendChild(newCategory);
-          // 加入景點種類
-          let newCategoryText = document.createTextNode(
-            attractions["data"][i]["category"]
-          );
-          newCategory.appendChild(newCategoryText);
-        }
-      }
-      if (attractions) {
-        loadAttractions();
-      }
-
-      // 新增bar list 的捷運站列表
-      function loadMrtList() {
-        let listItemContainer = document.getElementById("listItem-container");
-        let mrtNum = mrt.length;
-        for (let i = 0; i < mrtNum; i++) {
-          let newListItem = document.createElement("div");
-          newListItem.className = "listItem-container__listItem";
-          let newListItemName = document.createTextNode(mrt[i]);
-          newListItem.appendChild(newListItemName);
-          listItemContainer.appendChild(newListItem);
-        }
-      }
-      if (mrt) {
-        loadMrtList();
-      }
-    </script>
+    <div class="footer">
+      <div class="Body_Bold_16">COPYRIGHT © 2021 台北一日遊</div>
+    </div>
   </body>
 </html>

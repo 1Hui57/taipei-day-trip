@@ -1,15 +1,15 @@
 .main__attractions{
     width: 100%;
     max-width: 1200px;
-    height: 800px;
+    height: fit-content;
     padding: 15px;
     box-sizing: border-box;
+    margin-bottom: 40px;
 }
 
 .attractions__attractions-group{
     display: grid;
     grid-template-columns: repeat(4,270px);
-    grid-template-rows: repeat(3,242px);
     gap:30px
 }
 

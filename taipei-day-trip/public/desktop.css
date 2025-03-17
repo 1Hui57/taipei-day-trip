@@ -17,6 +17,28 @@ button{
     vertical-align: middle;
 }
 
+.Body_Bold_16{
+    font-family: "Noto Sans TC";
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0;
+    color:#FFFFFF;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.Header_1_Bold_28{
+    font-family: "Noto Sans TC";
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 24px;
+    letter-spacing: 0;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+}
+
 .justify-content-end{
     justify-content: end;
 }
@@ -30,6 +52,9 @@ button{
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
+    position: sticky;
+    top:0;
+    z-index: 1000;
 }
 
 .navbar__navContent{
@@ -77,6 +102,10 @@ button{
     width: 100%;
     height: 320px;
     background: linear-gradient( #AADDEE, #66AABB);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .hero-section img{
@@ -84,11 +113,34 @@ button{
     height: 100%;
     object-fit: cover;
     object-position: top;
+    z-index: 0;
+    position: absolute;
+}
+
+.slogan{
+    width:100%;
+    max-width: 1200px;
+    height: 169px;
+    padding: 10px;
+    position: absolute;
+    top:75px;
+    box-sizing: border-box;
+}
+
+.slogan__content{
+    width: 100%;
+    height: 100%;
+}
+
+.slogan__content__slogan{
+    width: 100%;
+    height: 78px;
 }
 
 .main{
     width: 100%;
-    height: 966px;
+    height: fit-content;
+    min-height: 966px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -155,11 +207,29 @@ button{
     box-sizing: border-box;
     font-family: "Noto Sans TC";
     font-weight: 500;
-    size: 16px;
+    font-size: 16px;
     line-height: 13.3px;
     letter-spacing: 0%;
     color: #666666;
 }
 
+.listItem-container__listItem:hover{
+    color: #252323;
+    font-weight: 600;
+    cursor: pointer;
+    transition-duration:0.4s ;
+}
 
+.footer{
+    width: 100%;
+    height:104px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #757575;
+}
 
+.footer div{
+    width: fit-content;
+    height: fit-content;
+}
