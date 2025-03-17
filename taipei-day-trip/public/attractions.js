@@ -14,20 +14,59 @@ document.addEventListener("DOMContentLoaded", async function (){
     //有取得資料就呼叫渲染景點的函式
     loadAttractions();
 })
+
 window.addEventListener("scroll", async function(){
-    if (currentKeyword!==null) return;
-    if(window.scrollY+window.screen.height >= document.body.scrollHeight){
-      if(nextPage!==null && !isLoading ){
-        isLoading=true;
-        let response = await fetch(`/api/attractions?page=${nextPage}`);
+  if(window.scrollY+window.screen.height >= document.body.scrollHeight){
+    if(nextPage!==null && !isLoading ){
+      isLoading=true; //防止重複送出請求
+      try{
+        let url = `/api/attractions?page=${nextPage}`;
+        if (currentKeyword !== null) {
+            url += `&keyword=${currentKeyword}`; // 添加關鍵字篩選
+        }
+        let response = await fetch(url);
+        console.log(url);
         attractions = await response.json();
         currentPage=nextPage;
         nextPage = attractions["nextPage"];
         loadAttractions();
-        isLoading=false;
+      }
+      catch(error){
+        console.log("載入失敗")
+      }
+      finally{
+        isLoading = false;
+      }
     }
-    }
-} )
+  }
+})
+
+// 根據搜尋欄輸入的關鍵字搜尋景點並渲染
+async function searchKeyword(){
+  let searchWord = document.getElementById("searchBar__input").value;
+  currentKeyword = searchWord;
+  let response = await fetch(`/api/attractions?page=0&keyword=${searchWord}`);
+  attractions = await response.json();
+  currentPage=0;
+  nextPage = attractions["nextPage"];
+  //清空目前的景點DOM
+  let attractionsGroup =document.getElementById("attractions__attractions-group");
+  attractionsGroup.innerHTML="";
+  //有取得資料就呼叫渲染景點的函式
+  loadAttractions();
+}
+
+// 搜尋按鈕監聽事件
+let searchBarBtn = document.querySelector(".searchBar__btn");
+searchBarBtn.addEventListener('click',searchKeyword);
+
+// 輸入後按下enter
+let searchInput = document.getElementById("searchBar__input");
+searchInput.addEventListener("keydown", function(event){
+  if(event.key==="Enter"){
+    searchKeyword();
+  }
+})
 
 
 // 透過拿到的資料載入attration DOM 的函式

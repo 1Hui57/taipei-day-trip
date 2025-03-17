@@ -34,7 +34,10 @@ function mrtAttractions(){
       currentKeyword = thisBtnText;
       let response = await fetch(`/api/attractions?page=0&keyword=${thisBtnText}`);
       attractions = await response.json();
+      currentPage=0;
       nextPage = attractions["nextPage"];
+      //將搜尋欄的input放入點擊的捷運站
+      document.getElementById("searchBar__input").value=thisBtnText;
       //清空目前的景點DOM
       let attractionsGroup =document.getElementById("attractions__attractions-group");
       attractionsGroup.innerHTML="";
@@ -44,7 +47,7 @@ function mrtAttractions(){
   })
 }
 let mrtBtn = document.querySelectorAll('.listItem-container__listItem');
-console.log(mrtBtn);
+
 // 寫一個函式可以讓listItem-container滑順的移動，此功能會以button事件監聽並呼叫
 function smoothScroll(element, scrollTo, duration) {
     let startTime = performance.now();
@@ -73,4 +76,3 @@ document.getElementById("rightArrow").addEventListener("click", function () {
     let scrollTo = listItem_container.scrollLeft + 200;
     smoothScroll(listItem_container, scrollTo, 400);
     });
-
