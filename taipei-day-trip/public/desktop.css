@@ -196,7 +196,8 @@ button{
 }
 
 .searchBar__input{
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     height: 100%;
     padding: 15px;
     box-sizing: border-box;
@@ -326,4 +327,10 @@ button{
     .slogan{
         width:340px;
     }
+
+    .searchBar__input{
+        max-width:320px;
+        width: 100%;
+    }
+
 }
