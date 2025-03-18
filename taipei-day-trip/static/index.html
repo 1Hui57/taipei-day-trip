@@ -4,8 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Taipei Day Trip 台北一日遊</title>
+    <!-- 載入css -->
     <link rel="stylesheet" href="/public/desktop.css" />
     <link rel="stylesheet" href="/public/attractions.css" />
+    <link rel="stylesheet" href="/public/dialog.css">
     <!-- Noto Sans TC -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,14 +17,35 @@
     />
     <script src="/public/mrtList.js" defer></script>
     <script src="/public/attractions.js" defer></script>
+    <script src="/public/dialog.js" defer></script>
   </head>
   <body>
+    <div class="dialog-section display-none" id="dialog-section">
+      <div class="dialog-section__dialog-signin">
+        <div class="dialog-signin__box">
+          <div class="dialog-signin__decator-bar"></div>
+        <div class="dialog-signin__close-btn" >
+          <img src="/public/picture/icon_close.png" id="dialog-close-btn" >
+        </div>
+        <div class="dialog-signin__main Header_3_Bold_24">
+          <div class="dialog-signin__main__text">登入會員帳號</div>
+          <div class="dialog-signin__main__container">
+            <input type="text" placeholder="輸入電子信箱" class="dialog-container__input Body_Med_16 colorGray">
+            <input type="text" placeholder="輸入密碼" class="dialog-container__input Body_Med_16 colorGray">
+            <button class="dialog-container__btn Button_Reg_19 colorWhite" id="dialogSignInBtn">登入帳戶</button>
+            <div class="dialog-container__signup Body_Med_16"id="dialogSignUpBtn">還沒有帳戶？點此註冊</div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="dialog-section__dialog-mask"></div>
+    </div>
     <div id="navigation" class="navbar">
       <div class="navbar__navContent">
         <p>台北一日遊</p>
         <div class="navbar__navItem">
           <button class="navItem__btn">預定行程</button>
-          <button class="navItem__btn">登入/註冊</button>
+          <button class="navItem__btn" id="signinBtn">登入/註冊</button>
         </div>
       </div>
     </div>
@@ -31,8 +54,8 @@
       <div class="slogan">
         <div class="slogan__content">
           <div class="slogan__content__slogan">
-            <div class="Header_1_Bold_28 marginBottom15">輕鬆享受台北一日悠閒</div>
-            <div class="Body_Bold_16 colorWhite">探索每個角落，體驗城市的深度旅遊行程</div>
+            <div class="Header_1_Bold_28 marginBottom15 slogan__text1">輕鬆享受台北一日悠閒</div>
+            <div class="Body_Bold_16 colorWhite slogan__text2">探索每個角落，體驗城市的深度旅遊行程</div>
           </div>
           <div class="slogan__content__search">
             <div class="search__searchBar">

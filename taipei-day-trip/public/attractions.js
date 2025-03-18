@@ -16,7 +16,8 @@ document.addEventListener("DOMContentLoaded", async function (){
 })
 
 window.addEventListener("scroll", async function(){
-  if(window.scrollY+window.screen.height >= document.body.scrollHeight){
+  if(window.scrollY+window.innerHeight >= document.body.scrollHeight-100){
+    console.log("成功觸發");
     if(nextPage!==null && !isLoading ){
       isLoading=true; //防止重複送出請求
       try{
