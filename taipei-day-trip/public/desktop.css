@@ -323,6 +323,12 @@ button{
     height: fit-content;
 }
 
+.scrollTriggerItem{
+    height: 1px;
+    width: 100%;
+    visibility: hidden;
+}
+
 @media (max-width:361px){
     .slogan{
         width:340px;

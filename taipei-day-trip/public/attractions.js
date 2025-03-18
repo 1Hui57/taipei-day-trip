@@ -15,32 +15,71 @@ document.addEventListener("DOMContentLoaded", async function (){
     loadAttractions();
 })
 
-window.addEventListener("scroll", async function(){
-  if(window.scrollY+window.innerHeight >= document.body.scrollHeight-100){
-    console.log("成功觸發");
-    if(nextPage!==null && !isLoading ){
-      isLoading=true; //防止重複送出請求
-      try{
-        let url = `/api/attractions?page=${nextPage}`;
-        if (currentKeyword !== null) {
-            url += `&keyword=${currentKeyword}`; // 添加關鍵字篩選
+let scrollTriggerItem = document.getElementById("scrollTriggerItem");
+let opition = {
+  root:null,
+  rootMargin:"0px 0px 20px 0px",
+  threshold:0
+};
+
+let observer = new IntersectionObserver( (entries)=>{
+  entries.forEach(async(entry)=>{
+    if(entry.isIntersecting){
+      // console.log("成功觸發");
+      if(nextPage!==null && !isLoading ){
+        isLoading=true; //防止重複送出請求
+        try{
+          let url = `/api/attractions?page=${nextPage}`;
+          if (currentKeyword !== null) {
+              url += `&keyword=${currentKeyword}`; // 添加關鍵字篩選
+          }
+          let response = await fetch(url);
+          // console.log(url);
+          attractions = await response.json();
+          currentPage=nextPage;
+          nextPage = attractions["nextPage"];
+          loadAttractions();
         }
-        let response = await fetch(url);
-        console.log(url);
-        attractions = await response.json();
-        currentPage=nextPage;
-        nextPage = attractions["nextPage"];
-        loadAttractions();
-      }
-      catch(error){
-        console.log("載入失敗")
-      }
-      finally{
-        isLoading = false;
+        catch(error){
+          console.log("載入失敗")
+        }
+        finally{
+          isLoading = false;
+        }
       }
     }
-  }
-})
+  })
+},opition);
+
+observer.observe(scrollTriggerItem);
+
+// 監聽滾動事件的程式
+// window.addEventListener("scroll", async function(){
+//   if(window.scrollY+window.innerHeight >= document.body.scrollHeight-100){
+//     console.log("成功觸發");
+//     if(nextPage!==null && !isLoading ){
+//       isLoading=true; //防止重複送出請求
+//       try{
+//         let url = `/api/attractions?page=${nextPage}`;
+//         if (currentKeyword !== null) {
+//             url += `&keyword=${currentKeyword}`; // 添加關鍵字篩選
+//         }
+//         let response = await fetch(url);
+//         console.log(url);
+//         attractions = await response.json();
+//         currentPage=nextPage;
+//         nextPage = attractions["nextPage"];
+//         loadAttractions();
+//       }
+//       catch(error){
+//         console.log("載入失敗")
+//       }
+//       finally{
+//         isLoading = false;
+//       }
+//     }
+//   }
+// })
 
 // 根據搜尋欄輸入的關鍵字搜尋景點並渲染
 async function searchKeyword(){
