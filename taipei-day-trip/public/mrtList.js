@@ -41,6 +41,9 @@ function mrtAttractions(){
       //清空目前的景點DOM
       let attractionsGroup =document.getElementById("attractions__attractions-group");
       attractionsGroup.innerHTML="";
+      attractionsGroup.className="";
+      //防止attractionsGroup的class沒有從錯誤版變回原版
+      attractionsGroup.classList.add("attractions__attractions-group");
       //有取得資料就呼叫渲染景點的函式
       loadAttractions();
     })

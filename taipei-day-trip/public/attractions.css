@@ -13,6 +13,13 @@
     gap:30px
 }
 
+.attractions__attractions-group--error{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .attractions-group__attraction{
     width: 270px;
     height: 242px;

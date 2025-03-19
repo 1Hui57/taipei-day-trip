@@ -329,6 +329,16 @@ button{
     visibility: hidden;
 }
 
+.errorText{
+    width: fit-content;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 @media (max-width:361px){
     .slogan{
         width:340px;

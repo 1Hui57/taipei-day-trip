@@ -87,13 +87,33 @@ async function searchKeyword(){
   currentKeyword = searchWord;
   let response = await fetch(`/api/attractions?page=0&keyword=${searchWord}`);
   attractions = await response.json();
-  currentPage=0;
-  nextPage = attractions["nextPage"];
-  //清空目前的景點DOM
-  let attractionsGroup =document.getElementById("attractions__attractions-group");
-  attractionsGroup.innerHTML="";
-  //有取得資料就呼叫渲染景點的函式
-  loadAttractions();
+  // 處裡關鍵字搜尋錯誤的畫面
+  if(attractions["error"]){
+    currentPage=null;
+    nextPage=null;
+    let attractionsGroup =document.getElementById("attractions__attractions-group");
+    attractionsGroup.innerHTML="";
+    attractionsGroup.className="";
+    attractionsGroup.classList.add("attractions__attraSctions-group--error");
+    let newDiv = document.createElement("div");
+    newDiv.className="Body_Bold_16 colorGray errorText"
+    newDiv.innerText = attractions["message"];
+    attractionsGroup.appendChild(newDiv);
+    return;
+  }
+  else{
+    currentPage=0;
+    nextPage = attractions["nextPage"];
+    //清空目前的景點DOM
+    let attractionsGroup =document.getElementById("attractions__attractions-group");
+    attractionsGroup.innerHTML="";
+    // 防止attractionsGroup class沒有從錯誤版變回原版
+    attractionsGroup.className="";
+    attractionsGroup.classList.add("attractions__attractions-group");
+    //有取得資料就呼叫渲染景點的函式
+    loadAttractions();
+  }
+  
 }
 
 // 搜尋按鈕監聽事件
