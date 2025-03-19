@@ -1,0 +1,130 @@
+.display-none{
+    display: none !important; 
+}
+
+.dialog-section{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 2000;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.25);
+    justify-content: center;
+}
+
+.dialog-section__dialog-signin{
+    width:340px;
+    height: 275px;
+    position: fixed;
+    top: 80px;
+    left: auto;
+    right: auto;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 60px 0 #AAAAAA;
+}
+
+.dialog-signin__box{
+    width:340px;
+    height: 275px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.dialog-signin__decator-bar{
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(to right, #66AABB, #337788);
+    border-radius: 5px 5px 0 0;
+}
+
+.dialog-signin__close-btn{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 20px;
+    left: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1500;
+}
+
+.dialog-signin__close-btn img{
+    width: 16px;
+    height: 16px;
+}
+
+.dialog-signin__close-btn img:hover{
+    cursor: pointer;
+}
+
+.dialog-signin__main{
+    width: 310px;
+    height: 234px;
+    position: absolute;
+    top:25px;
+    left: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dialog-signin__main__text{
+    width: fit-content;
+    height: 27px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialog-signin__main__container{
+    width: 100%;
+    height: 192px;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dialog-container__input{
+    width: 100%;
+    height: 47px;
+    border-radius: 5px;
+    border: solid 1px #CCCCCC;
+    padding: 15px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.dialog-container__btn{
+    width: 100%;
+    height: 46px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #448899;
+    margin-bottom: 10px;
+}
+
+.dialog-container__btn:hover{
+    cursor: pointer;
+}
+
+.dialog-container__signup{
+    width: 100%;
+    height: 22px;
+    color: #666666;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialog-container__signup:hover{
+    cursor: pointer;
+    color: #337788;
+    transition-duration: 300;
+}

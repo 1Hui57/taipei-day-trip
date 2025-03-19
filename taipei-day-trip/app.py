@@ -1,18 +1,24 @@
 import math
 from fastapi import *
 from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.exceptions import RequestValidationError
 from typing import Annotated, Optional
 import mysql.connector
-app=FastAPI()
+from mysql.connector import pooling
+from dotenv import load_dotenv
+import os
 
-# 建立資料庫連線
-con=mysql.connector.connect(
-    user="root",
-    password="123456789",
-    host="localhost",
-    database="taipei_day_trip",
-	charset="utf8mb4"
+app=FastAPI()
+load_dotenv()
+# 建立連線池
+connection_pool = pooling.MySQLConnectionPool(
+	pool_name="taipei_day_trip",
+	pool_size=5,
+	host=os.getenv("DB_HOST"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    database=os.getenv("DB_NAME")
 )
 
 # 定義一個函式，可以根據要求字串抓取資料包括所有符合資料的圖片url
@@ -44,11 +50,14 @@ async def api_attractions(
 	page:Annotated[int, Query(ge=0)],
 	keyword:Annotated[Optional[str], Query()]=None
 	):
-	cursor=con.cursor()
+	connection = connection_pool.get_connection()
+	cursor = connection.cursor()
 	# 根據page算出查詢過後的起始筆數
 	pageStartFrom=page*12 if page>0 else 0
 	results=getAttractionData(cursor, keyword, pageStartFrom)
 	resultsNumber=getAttractionNumber(cursor, keyword)
+	cursor.close()
+	connection.close() 
 	if results:
 		data=[]
 		for item in results:
@@ -81,8 +90,11 @@ async def validation_exception_handler(request:Request, exc:RequestValidationErr
 
 @app.get("/api/attraction/{attractionId}")		
 async def api_attraction_attractionId(request:Request,attractionId:Annotated[int, Path(gt=0)]):
-	cursor=con.cursor()
+	connection = connection_pool.get_connection()
+	cursor = connection.cursor()
 	results=getAttractionData(cursor,keyword=None,pageStartFrom=0,attractionId=attractionId)
+	cursor.close()
+	connection.close() 
 	if results[0][0] is not None:
 		images=results[0][9].split(',')
 		data={
@@ -103,9 +115,12 @@ async def api_attraction_attractionId(request:Request,attractionId:Annotated[int
 
 @app.get("/api/mrts")
 async def get_mrt(request:Request):
-	cursor=con.cursor()
+	connection = connection_pool.get_connection()
+	cursor = connection.cursor()
 	cursor.execute("SELECT mrt,COUNT(mrt) FROM attractions GROUP BY mrt ORDER BY COUNT(mrt) DESC")
 	mrtData=cursor.fetchall()
+	cursor.close()
+	connection.close() 
 	data=[]
 	for item in mrtData:
 		if item[0]:
@@ -127,3 +142,6 @@ async def booking(request: Request):
 @app.get("/thankyou", include_in_schema=False)
 async def thankyou(request: Request):
 	return FileResponse("./static/thankyou.html", media_type="text/html")
+
+# 建立靜態檔案資料夾
+app.mount("/public", StaticFiles(directory="public"))
