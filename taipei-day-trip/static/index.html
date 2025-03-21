@@ -7,7 +7,7 @@
     <!-- 載入css -->
     <link rel="stylesheet" href="/public/desktop.css" />
     <link rel="stylesheet" href="/public/attractions.css" />
-    <link rel="stylesheet" href="/public/dialog.css">
+    <link rel="stylesheet" href="/public/dialog.css" />
     <!-- Noto Sans TC -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,22 +20,83 @@
     <script src="/public/dialog.js" defer></script>
   </head>
   <body>
-    <div class="dialog-section display-none" id="dialog-section">
-      <div class="dialog-section__dialog-signin">
-        <div class="dialog-signin__box">
-          <div class="dialog-signin__decator-bar"></div>
-        <div class="dialog-signin__close-btn" >
-          <img src="/public/picture/icon_close.png" id="dialog-close-btn" >
-        </div>
-        <div class="dialog-signin__main Header_3_Bold_24">
-          <div class="dialog-signin__main__text">登入會員帳號</div>
-          <div class="dialog-signin__main__container">
-            <input type="text" placeholder="輸入電子信箱" class="dialog-container__input Body_Med_16 colorGray">
-            <input type="text" placeholder="輸入密碼" class="dialog-container__input Body_Med_16 colorGray">
-            <button class="dialog-container__btn Button_Reg_19 colorWhite" id="dialogSignInBtn">登入帳戶</button>
-            <div class="dialog-container__signup Body_Med_16"id="dialogSignUpBtn">還沒有帳戶？點此註冊</div>
+    <div class="dialog-section display-none" id="dialog-section--signin">
+      <div class="dialog-section__dialog-sign dialog-section__dialog-sign--signin">
+        <div class="dialog-sign__box--signin">
+          <div class="dialog-sign__decator-bar"></div>
+          <div class="dialog-sign__close-btn">
+            <img src="/public/picture/icon_close.png" id="dialog-close-btn-signin" />
+          </div>
+          <div class="dialog-sign__main dialog-sign__main--signin Header_3_Bold_24">
+            <div class="dialog-sign__main__text">登入會員帳號</div>
+            <div class="dialog-sign__main__container dialog-sign__main__container--signin">
+              <input
+                type="text"
+                placeholder="輸入電子信箱"
+                class="dialog-container__input Body_Med_16 colorGray"
+              />
+              <input
+                type="text"
+                placeholder="輸入密碼"
+                class="dialog-container__input Body_Med_16 colorGray"
+              />
+              <button
+                class="dialog-container__btn Button_Reg_19 colorWhite"
+                id="dialogSignInBtn"
+              >
+                登入帳戶
+              </button>
+              <div
+                class="dialog-container__sign Body_Med_16"
+                id="signInSection-signUpBtn"
+              >
+                還沒有帳戶？點此註冊
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+      <div class="dialog-section__dialog-mask"></div>
+    </div>
+    <div class="dialog-section display-none" id="dialog-section--signup">
+      <div class="dialog-section__dialog-sign dialog-section__dialog-sign--signup">
+        <div class="dialog-sign__box--signup">
+          <div class="dialog-sign__decator-bar"></div>
+          <div class="dialog-sign__close-btn">
+            <img src="/public/picture/icon_close.png" id="dialog-close-btn-signup" />
+          </div>
+          <div class="dialog-sign__main dialog-sign__main--signup Header_3_Bold_24">
+            <div class="dialog-sign__main__text">註冊會員帳號</div>
+            <div class="dialog-sign__main__container dialog-sign__main__container--signup">
+              <input
+                type="text"
+                placeholder="輸入姓名"
+                class="dialog-container__input Body_Med_16 colorGray"
+              />
+              <input
+                type="text"
+                placeholder="輸入電子郵件"
+                class="dialog-container__input Body_Med_16 colorGray"
+              />
+              <input
+                type="text"
+                placeholder="輸入密碼"
+                class="dialog-container__input Body_Med_16 colorGray"
+              />
+              <button
+                class="dialog-container__btn Button_Reg_19 colorWhite"
+                id="dialogSignUpBtn"
+              >
+                註冊新帳戶
+              </button>
+              <div
+                class="dialog-container__sign Body_Med_16"
+                id="signUpSection-signInBtn"
+              >
+                還沒有帳戶？點此註冊
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="dialog-section__dialog-mask"></div>
@@ -54,14 +115,23 @@
       <div class="slogan">
         <div class="slogan__content">
           <div class="slogan__content__slogan">
-            <div class="Header_1_Bold_28 marginBottom15 slogan__text1">輕鬆享受台北一日悠閒</div>
-            <div class="Body_Bold_16 colorWhite slogan__text2">探索每個角落，體驗城市的深度旅遊行程</div>
+            <div class="Header_1_Bold_28 marginBottom15 slogan__text1">
+              輕鬆享受台北一日悠閒
+            </div>
+            <div class="Body_Bold_16 colorWhite slogan__text2">
+              探索每個角落，體驗城市的深度旅遊行程
+            </div>
           </div>
           <div class="slogan__content__search">
             <div class="search__searchBar">
-              <input type="text" placeholder="請輸入景點名稱查詢"class="searchBar__input Body_Bold_16 colorGray" id="searchBar__input">
+              <input
+                type="text"
+                placeholder="請輸入景點名稱查詢"
+                class="searchBar__input Body_Bold_16 colorGray"
+                id="searchBar__input"
+              />
               <div class="searchBar__btn">
-                <img src="/public/picture/icon_search.png" id="searchIcon">
+                <img src="/public/picture/icon_search.png" id="searchIcon" />
               </div>
             </div>
           </div>
@@ -76,8 +146,7 @@
           </div>
         </div>
         <div class="list-bar__container list-bar__container--center">
-          <div id="listItem-container" class="listItem-container">
-          </div>
+          <div id="listItem-container" class="listItem-container"></div>
         </div>
         <div class="list-bar__container list-bar__container--right">
           <div class="list-bar__arrow">
@@ -86,8 +155,10 @@
         </div>
       </div>
       <div class="main__attractions">
-        <div class="attractions__attractions-group" id="attractions__attractions-group">
-        </div>
+        <div
+          class="attractions__attractions-group"
+          id="attractions__attractions-group"
+        ></div>
       </div>
     </div>
     <div class="scrollTriggerItem" id="scrollTriggerItem"></div>
