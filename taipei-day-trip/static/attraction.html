@@ -1,11 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Attraction</title>
-</head>
-<body>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Attraction</title>
+    <!-- Noto Sans TC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- 載入css檔案 -->
+    <link rel="stylesheet" href="../public/desktop.css" />
+    <link rel="stylesheet" href="../public/attraction.css" />
+  </head>
+  <body>
+    <div id="navigation" class="navbar nav__hr-bottom">
+      <div class="navbar__navContent">
+        <p>台北一日遊</p>
+        <div class="navbar__navItem">
+          <button class="navItem__btn">預定行程</button>
+          <button class="navItem__btn" id="signinBtn">登入/註冊</button>
+        </div>
+      </div>
+    </div>
+    <div class="attraction-section">
+      <div class="attraction-section__picture-leftArrow">
+        <img
+          src="../public/picture/picture arrow left.png"
+          style="width: 36px; height: 36px"
+        />
+      </div>
+      <div class="attraction-section__picture-rightArrow">
+        <img
+          src="../public/picture/picture arrow right .png"
+          style="width: 36px; height: 36px"
+        />
+      </div>
+      <div class="attraction-section__pictureBar">
+        <div class="attraction-section__picture-current">
+          <div class="attraction-section__picture-current--wrapper">
+            <img
+              src="https://www.travel.taipei/d_upload_ttn/sceneadmin/image/A0/B0/C0/D370/E882/F626/420c6cf8-45c6-4c31-8e0a-42d44a1a5eac.jpg"
+              class="attraction-section__picture-current--img"
+            />
+          </div>
+          <div class="attraction-section__picture-current--wrapper">
+            <img
+              src="https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11003127.jpg"
+              class="attraction-section__picture-current--img"
+            />
+          </div>
+          <div class="attraction-section__picture-current--wrapper">
+            <img
+              src="https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11003128.jpg"
+              class="attraction-section__picture-current--img"
+            />
+          </div>
+          <div class="attraction-section__picture-current--wrapper">
+            <img
+              src="https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11003128.jpg"
+              class="attraction-section__picture-current--img"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="attraction-section__profile">
+        <div class="profile__name Header_3_Bold_24">陽明山中山樓</div>
+        <div class="profile__category Body_Med_16_400 colorGray70">
+          歷史建築 at 劍潭
+        </div>
+        <div class="profile__booking-form">
+          <div class="booking-form__text--1 Body_Bold_16 colorGray70">
+            訂購導覽行程
+          </div>
+          <div class="booking-form__text--2 Body_Med_16_400 colorGray70">
+            以此景點為中心的一日行程，帶您探索城市角落故事
+          </div>
+          <div class="booking-form__filed-date Body_Bold_16 colorGray70">
+            選擇日期：
+            <input type="date" class="Body_Med_16_400 colorBlack" />
+          </div>
+          <div class="booking-form__filed-time Body_Bold_16 colorGray70">
+            選擇時間：
+            <input type="radio" id="am" name="time" />
+            <label for="am" class="Body_Med_16_400 colorGray70">上半天</label>
+            <input type="radio" id="pm" name="time" />
+            <label for="pm" class="Body_Med_16_400 colorGray70">下半天</label>
+          </div>
+          <div class="booking-form__filed-price Body_Bold_16 colorGray70">
+            導覽費用：
+            <div class="Body_Med_16_400 colorGray70">新台幣 2000 元</div>
+          </div>
+          <button class="booking-form__button Button_Reg_19 colorWhite">
+            開始預約行程
+          </button>
+        </div>
+      </div>
+    </div>
+    <hr style="border: 1px solid #e8e8e8; width: 1200px; margin-top: 40px" />
+    <div class="infors">
+      <div class="infors__description Content_Reg_16 colorGray70">
+        陽明山國家公園內的中山樓，是蔣介石總統在位時，為了紀念國父孫中山先生百年誕辰，於1965年所興建，由名建築師修澤蘭女士規劃，位於群山環抱的綠意之中，外表為中國傳統古典式建築，內部陳設典雅細緻，過去是國民大會的會場，並為國家元首接待外賓或舉辦國宴的重要場地，如今已被指定為市立古蹟，並開放場地租借及參觀導覽，是一座具有歷史紀念價值的建築物。
+        參觀導覽 02-2861-6391 / 場地租借 02-2861-0565
+      </div>
+      <div class="infors__location-title Body_Bold_16 colorGray70">
+        景點地址：
+      </div>
+      <div class="infors__location-content Body_Med_16_400 colorGray70">
+        臺北市 北投區陽明路2段15號
+      </div>
+      <div class="infors__traffic-title Body_Bold_16 colorGray70">
+        交通方式：
+      </div>
+      <div class="infors__traffic-content Body_Med_16_400 colorGray70">
+        捷運劍潭站轉乘紅5、260至教師研習站下車到達公車－每日行駛：&nbsp;中山樓正門站─260
+        &nbsp;(說明：駛入園區直接停於本樓)中山樓站─260、681、紅5、1717(皇家客運)
+        &nbsp;(說明：停於園區門口，步行5分鐘至本樓)陽明山站─230、303、小8、小9
+        &nbsp;(說明：步行5分鐘至園區門口，在步行5分至本樓)假日行駛：中山樓站─109、111、128
+        &nbsp;(說明：停於園區門口，步行5分鐘至本樓)陽明山站─129
+        &nbsp;(說明：步行5分鐘至園區門口，在步行5分至本樓)&nbsp;
+      </div>
+    </div>
+    <div class="footer">
+      <div class="Body_Bold_16 colorWhite">COPYRIGHT © 2021 台北一日遊</div>
+    </div>
+    <script>
+      let attraction = {
+        data: {
+          id: 55,
+          name: "陽明山中山樓",
+          category: "歷史建築",
+          description:
+            "陽明山國家公園內的中山樓，是蔣介石總統在位時，為了紀念國父孫中山先生百年誕辰，於1965年所興建，由名建築師修澤蘭女士規劃，位於群山環抱的綠意之中，外表為中國傳統古典式建築，內部陳設典雅細緻，過去是國民大會的會場，並為國家元首接待外賓或舉辦國宴的重要場地，如今已被指定為市立古蹟，並開放場地租借及參觀導覽，是一座具有歷史紀念價值的建築物。 參觀導覽 02-2861-6391 / 場地租借 02-2861-0565",
+          address: "臺北市  北投區陽明路2段15號",
+          transport:
+            "捷運劍潭站轉乘紅5、260至教師研習站下車到達公車－每日行駛：&nbsp;中山樓正門站─260 &nbsp;(說明：駛入園區直接停於本樓)中山樓站─260、681、紅5、1717(皇家客運) &nbsp;(說明：停於園區門口，步行5分鐘至本樓)陽明山站─230、303、小8、小9 &nbsp;(說明：步行5分鐘至園區門口，在步行5分至本樓)假日行駛：中山樓站─109、111、128 &nbsp;(說明：停於園區門口，步行5分鐘至本樓)陽明山站─129 &nbsp;(說明：步行5分鐘至園區門口，在步行5分至本樓)&nbsp;",
+          mrt: "劍潭",
+          lat: 25.155623,
+          lng: 121.552772,
+          images: [
+            "https://www.travel.taipei/d_upload_ttn/sceneadmin/image/A0/B0/C0/D370/E882/F626/420c6cf8-45c6-4c31-8e0a-42d44a1a5eac.jpg",
+            "https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11003127.jpg",
+            "https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11003128.jpg",
+            "https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11003129.jpg",
+          ],
+        },
+      };
+      let cot = 0;
+      let imagesNum = attraction["data"]["images"].length;
+      function imagesLeftScroll() {
+        if (cot < imagesNum - 1) {
+          let imagesScrollBar = document.querySelector(
+            ".attraction-section__picture-current"
+          );
+          imagesScrollBar.style.transform = `translateX(-${(cot + 1) * 540}px)`;
+          cot++;
+        }
+      }
+
+      function imagesRightScroll() {
+        if (cot > 0) {
+          let imagesScrollBar = document.querySelector(
+            ".attraction-section__picture-current"
+          );
+          imagesScrollBar.style.transform = `translateX(-${(cot-1) * 540}px)`;
+          cot--;
+        }
+      }
+    </script>
+  </body>
 </html>

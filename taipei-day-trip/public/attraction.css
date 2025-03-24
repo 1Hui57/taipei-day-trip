@@ -1,0 +1,229 @@
+body{
+    margin: 0;
+}
+
+.nav__hr-bottom{
+    border-bottom:1px solid #E8E8E8;
+}
+
+.attraction-section{
+    width: 100%;
+    max-width: 1200px;
+    height: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    display: flex;
+    position: relative;
+}
+
+
+.attraction-section__pictureBar{
+    width: 540px;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 5px;
+    margin-left: 15px;
+}
+
+.attraction-section__picture-current{
+    width: fit-content;
+    height: 100%;
+    /* margin-left: 15px; */
+    /* border-radius: 5px; */
+    background-color: aquamarine;
+    display: flex;
+    transition: transform 1s ease;
+}
+
+.attraction-section__picture-current--wrapper{
+    width: 540px;
+    height: 100%;
+    border-radius: 5px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.attraction-section__picture-current--img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.attraction-section__picture-leftArrow{
+    width: 36px;
+    height: 36px;
+    position: absolute;
+    left: 25px;
+    top: 182px;
+    opacity: 0.75;
+    z-index: 10;
+}
+
+.attraction-section__picture-rightArrow{
+    width: 36px;
+    height: 36px;
+    position: absolute;
+    left: 505px;
+    top: 182px;
+    opacity: 0.75;
+    z-index: 10;
+}
+
+.attraction-section__profile{
+    width: 600px;
+    height: 100%;
+    margin-left: 30px;
+}
+
+.profile__name{
+    width: 100%;
+    height: 33px;
+    display: flex;
+    align-items: center;
+}
+
+.profile__category{
+    width: 100%;
+    height: 22px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.profile__booking-form{
+    width: 100%;
+    height: 302px;
+    border-radius: 5px;
+    background-color: #E8E8E8;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+}
+
+.booking-form__text--1{
+    width: 560px;
+    height: 22px;
+    margin-top: 15px;
+    margin-left: 20px;
+}
+
+.booking-form__text--2{
+    width: 560px;
+    height: 24px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.booking-form__filed-date{
+    width: 560px;
+    height: 35px;
+    margin-top: 15px;
+    margin-left: 20px;
+}
+
+.booking-form__filed-date input{
+    width: 193px;
+    height: 35px;
+    margin-left: 5px;
+    border:none;
+    padding: 5px 10px ;
+    box-sizing: border-box;
+}
+
+.booking-form__filed-time{
+    width: 560px;
+    height: 22px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.booking-form__filed-time input{
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    margin-left: 10px;
+    margin-right: 4px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+}
+
+.booking-form__filed-time input:checked{
+    background-color: #448899;    
+    border: 2px solid #FFFFFF;
+}
+
+.booking-form__filed-time label{
+    margin-right: 8px;
+    font-family: "Noto Sans TC";
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0;
+}
+.booking-form__filed-price{
+    width: 560px;
+    height: 22px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.booking-form__filed-price div{
+    margin-left: 5px;
+}
+
+.booking-form__button{
+    width: 154px;
+    height: 36px;
+    margin-top: 25px;
+    margin-left: 20px;
+    background-color: #448899;
+    border-radius: 5px;
+}
+
+.infors{
+    width: 100%;
+    max-width: 1200px;
+    min-height: 362px;
+    height: fit-content;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.infors__description{
+    max-width:1180px;
+    height:fit-content;
+    margin-bottom: 20px;
+}
+
+.infors__location-title{
+    max-width:1180px;
+    height: 32px;
+}
+
+.infors__location-content{
+    max-width:1180px;
+    height: 24px;
+    margin-bottom: 20px;
+}
+
+.infors__traffic-title{
+    max-width:1180px;
+    height: 32px;
+}
+
+.infors__traffic-content{
+    max-width:1180px;
+    height: fit-content;
+}
