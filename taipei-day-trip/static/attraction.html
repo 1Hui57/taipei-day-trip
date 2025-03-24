@@ -26,19 +26,19 @@
       </div>
     </div>
     <div class="attraction-section">
-      <div class="attraction-section__picture-leftArrow">
-        <img
-          src="../public/picture/picture arrow left.png"
-          style="width: 36px; height: 36px"
-        />
-      </div>
-      <div class="attraction-section__picture-rightArrow">
-        <img
-          src="../public/picture/picture arrow right .png"
-          style="width: 36px; height: 36px"
-        />
-      </div>
       <div class="attraction-section__pictureBar">
+        <div class="attraction-section__picture-leftArrow">
+          <img
+            src="../public/picture/picture arrow left.png"
+            style="width: 36px; height: 36px"
+          />
+        </div>
+        <div class="attraction-section__picture-rightArrow">
+          <img
+            src="../public/picture/picture arrow right .png"
+            style="width: 36px; height: 36px"
+          />
+        </div>
         <div class="attraction-section__picture-current">
           <div class="attraction-section__picture-current--wrapper">
             <img
@@ -99,7 +99,7 @@
         </div>
       </div>
     </div>
-    <hr style="border: 1px solid #e8e8e8; width: 1200px; margin-top: 40px" />
+    <hr style="border: 1px solid #e8e8e8; width:98%; max-width: 1200px; margin-top: 40px" />
     <div class="infors">
       <div class="infors__description Content_Reg_16 colorGray70">
         陽明山國家公園內的中山樓，是蔣介石總統在位時，為了紀念國父孫中山先生百年誕辰，於1965年所興建，由名建築師修澤蘭女士規劃，位於群山環抱的綠意之中，外表為中國傳統古典式建築，內部陳設典雅細緻，過去是國民大會的會場，並為國家元首接待外賓或舉辦國宴的重要場地，如今已被指定為市立古蹟，並開放場地租借及參觀導覽，是一座具有歷史紀念價值的建築物。
@@ -155,7 +155,8 @@
           let imagesScrollBar = document.querySelector(
             ".attraction-section__picture-current"
           );
-          imagesScrollBar.style.transform = `translateX(-${(cot + 1) * 540}px)`;
+          let imageWidth = document.querySelector(".attraction-section__pictureBar").offsetWidth;
+          imagesScrollBar.style.transform = `translateX(-${(cot + 1) * imageWidth}px)`;
           cot++;
         }
       }
@@ -165,10 +166,21 @@
           let imagesScrollBar = document.querySelector(
             ".attraction-section__picture-current"
           );
-          imagesScrollBar.style.transform = `translateX(-${(cot-1) * 540}px)`;
+          let imageWidth = document.querySelector(".attraction-section__pictureBar").offsetWidth;
+          imagesScrollBar.style.transform = `translateX(-${(cot-1) * imageWidth}px)`;
           cot--;
         }
       }
+
+      let imageLeftArrow = document.querySelector(".attraction-section__picture-leftArrow");
+      imageLeftArrow.addEventListener('click',function(){
+        imagesRightScroll();
+      })
+
+      let imageRightArrow = document.querySelector(".attraction-section__picture-rightArrow");
+      imageRightArrow.addEventListener('click',function(){
+        imagesLeftScroll();
+      })
     </script>
   </body>
 </html>

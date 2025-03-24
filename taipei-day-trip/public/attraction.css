@@ -14,23 +14,23 @@ body{
     margin-right: auto;
     margin-top: 40px;
     display: flex;
-    position: relative;
+    padding: 0 15px;
+    box-sizing: border-box;
+    
 }
-
 
 .attraction-section__pictureBar{
     width: 540px;
     height: 100%;
     overflow: hidden;
     border-radius: 5px;
-    margin-left: 15px;
+    position: relative;
+    flex-shrink: 0;
 }
 
 .attraction-section__picture-current{
     width: fit-content;
     height: 100%;
-    /* margin-left: 15px; */
-    /* border-radius: 5px; */
     background-color: aquamarine;
     display: flex;
     transition: transform 1s ease;
@@ -49,26 +49,31 @@ body{
     height: 100%;
     object-fit: cover;
     border-radius: 5px;
+    object-position: center;
 }
 
 .attraction-section__picture-leftArrow{
     width: 36px;
     height: 36px;
     position: absolute;
-    left: 25px;
-    top: 182px;
+    left: 10px;
+    top: 50%;
     opacity: 0.75;
     z-index: 10;
+    transform: translate(0,-50%);
+    cursor: pointer;
 }
 
 .attraction-section__picture-rightArrow{
     width: 36px;
     height: 36px;
     position: absolute;
-    left: 505px;
-    top: 182px;
+    right: 10px;
+    top: 50%;
     opacity: 0.75;
     z-index: 10;
+    transform: translate(0,-50%);
+    cursor: pointer;
 }
 
 .attraction-section__profile{
@@ -100,30 +105,28 @@ body{
     margin-top: 20px;
     display: flex;
     flex-direction: column;
+    padding: 0 20px;
+    box-sizing: border-box;
     /* align-items: center; */
 }
 
 .booking-form__text--1{
-    width: 560px;
+    width: fit-content;
     height: 22px;
     margin-top: 15px;
-    margin-left: 20px;
 }
 
 .booking-form__text--2{
-    width: 560px;
-    height: 24px;
+    width: fit-content;
     margin-top: 15px;
     display: flex;
     align-items: center;
-    margin-left: 20px;
 }
 
 .booking-form__filed-date{
-    width: 560px;
+    width: fit-content;
     height: 35px;
     margin-top: 15px;
-    margin-left: 20px;
 }
 
 .booking-form__filed-date input{
@@ -136,12 +139,11 @@ body{
 }
 
 .booking-form__filed-time{
-    width: 560px;
+    width: fit-content;
     height: 22px;
     margin-top: 15px;
     display: flex;
     align-items: center;
-    margin-left: 20px;
 }
 
 .booking-form__filed-time input{
@@ -167,12 +169,11 @@ body{
     letter-spacing: 0;
 }
 .booking-form__filed-price{
-    width: 560px;
+    width: fit-content;
     height: 22px;
     margin-top: 15px;
     display: flex;
     align-items: center;
-    margin-left: 20px;
 }
 
 .booking-form__filed-price div{
@@ -183,9 +184,14 @@ body{
     width: 154px;
     height: 36px;
     margin-top: 25px;
-    margin-left: 20px;
     background-color: #448899;
     border-radius: 5px;
+}
+
+.attraction-hr{
+    border: 1px solid #e8e8e8; 
+    width:1200px; 
+    margin-top: 40px
 }
 
 .infors{
@@ -226,4 +232,61 @@ body{
 .infors__traffic-content{
     max-width:1180px;
     height: fit-content;
+}
+
+@media(max-width:1200px){
+
+    .attraction-section{
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        padding: 0 0;
+        align-items: center;
+        margin-top: 0;
+    }
+
+    .attraction-section__pictureBar{
+        width: 100%;
+        height: 500px;
+    }
+
+    .attraction-section__picture-current{
+        width: 100%;
+    }
+
+    .attraction-section__picture-current--wrapper{
+        width: 100%;
+    }
+
+    .attraction-section__profile{
+        margin-left: 0;
+        margin-top: 20px;
+        width: 90%;
+    }
+
+    .infors{
+        width: 90%;
+    }
+
+    .attraction-hr{
+        width: 90%;
+    }
+
+}
+
+@media(max-width:500px){
+    .attraction-section__pictureBar{
+        height: 350px;
+    }
+
+    .attraction-section__profile{
+        margin-left: 10;
+        margin-top: 20px;
+        width: 94.4%;
+    }
+
+    .infors{
+        width: 94.4%;
+    }
 }
