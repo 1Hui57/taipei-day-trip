@@ -178,6 +178,7 @@ body{
     border:none;
     padding: 5px 10px ;
     box-sizing: border-box;
+    background-color: #FFFFFF;
 }
 
 .booking-form__filed-time{
