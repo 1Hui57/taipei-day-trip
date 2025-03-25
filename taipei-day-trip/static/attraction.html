@@ -12,16 +12,16 @@
       rel="stylesheet"
     />
     <!-- 載入css檔案 -->
-    <link rel="stylesheet" href="../public/desktop.css" />
-    <link rel="stylesheet" href="../public/attraction.css" />
+    <link rel="stylesheet" href="/public/desktop.css" />
+    <link rel="stylesheet" href="/public/attraction.css" />
     <!-- 載入JS -->
-    <script src="../public/attraction.js" defer></script>
+    <script src="/public/attraction.js" defer></script>
   </head>
   <body>
     <div class="attraction-wrapper">
       <div id="navigation" class="navbar nav__hr-bottom">
         <div class="navbar__navContent">
-          <p>台北一日遊</p>
+          <p id="backToIndex" style="cursor: pointer;">台北一日遊</p>
           <div class="navbar__navItem">
             <button class="navItem__btn">預定行程</button>
             <button class="navItem__btn" id="signinBtn">登入/註冊</button>
@@ -41,6 +41,11 @@
               src="../public/picture/picture arrow right .png"
               style="width: 36px; height: 36px"
             />
+          </div>
+          <div class="attraction-section__circle-box">
+            <!-- <div class="circle-box__small-circle--origin"></div>
+            <div class="circle-box__small-circle--origin"></div>
+            <div class="circle-box__small-circle--change"></div> -->
           </div>
           <div
             class="attraction-section__picture-current"
@@ -75,7 +80,7 @@
               導覽費用：
               <div class="Body_Med_16_400 colorGray70" id="price">新台幣 2000 元</div>
             </div>
-            <button class="booking-form__button Button_Reg_19 colorWhite">
+            <button class="booking-form__button Button_Reg_19 colorWhite" id="bookingButton">
               開始預約行程
             </button>
           </div>

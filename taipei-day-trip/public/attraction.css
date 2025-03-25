@@ -38,30 +38,6 @@ body{
     flex-shrink: 0;
 }
 
-.attraction-section__picture-current{
-    width: fit-content;
-    height: 100%;
-    background-color: aquamarine;
-    display: flex;
-    transition: transform 1s ease;
-}
-
-.attraction-section__picture-current--wrapper{
-    width: 540px;
-    height: 100%;
-    border-radius: 5px;
-    flex-shrink: 0;
-    overflow: hidden;
-}
-
-.attraction-section__picture-current--img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 5px;
-    object-position: center;
-}
-
 .attraction-section__picture-leftArrow{
     width: 36px;
     height: 36px;
@@ -84,6 +60,62 @@ body{
     z-index: 10;
     transform: translate(0,-50%);
     cursor: pointer;
+}
+
+.attraction-section__circle-box{
+    width: fit-content;
+    height: 12px;
+    opacity: 75%;
+    z-index: 15;
+    display: flex;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%,0);
+}
+
+
+.circle-box__small-circle{
+    width: 12px;
+    height: 12px;
+    margin: 0 6px;
+    border-radius: 50%;
+}
+
+.circle-box__small-circle--origin{
+    background-color: #FFFFFF;
+}
+
+.circle-box__small-circle--change{
+    background-color: #000000;
+    border: 1px solid #FFFFFF;
+}
+
+
+
+.attraction-section__picture-current{
+    width: fit-content;
+    height: 100%;
+    background-color: aquamarine;
+    display: flex;
+    transition: transform 1s ease;
+}
+
+.attraction-section__picture-current--wrapper{
+    width: 540px;
+    height: 100%;
+    border-radius: 5px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.attraction-section__picture-current--img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+    object-position: center;
 }
 
 .attraction-section__profile{

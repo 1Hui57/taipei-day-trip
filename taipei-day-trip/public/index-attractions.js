@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", async function (){
     nextPage = attractions["nextPage"];
     //有取得資料就呼叫渲染景點的函式
     loadAttractions();
+    
 })
 
 let scrollTriggerItem = document.getElementById("scrollTriggerItem");
@@ -113,7 +114,6 @@ async function searchKeyword(){
     //有取得資料就呼叫渲染景點的函式
     loadAttractions();
   }
-  
 }
 
 // 搜尋按鈕監聽事件
@@ -163,10 +163,10 @@ function loadAttractions() {
       newDetailsInfo.className = "details__info";
       // 新增捷運站名稱DOM
       let newMrtName = document.createElement("div");
-      newMrtName.className = "Body_Med_16";
+      newMrtName.className = "Body_Med_16_500";
       // 新增景點分類 DOM
       let newCategory = document.createElement("div");
-      newCategory.className = "Body_Med_16 justify-content-end";
+      newCategory.className = "Body_Med_16_500 justify-content-end";
 
       // 組合DOM
       attractionsGroupDOM.appendChild(newAttractionDOM);
@@ -177,12 +177,13 @@ function loadAttractions() {
       newAttractionContainer.appendChild(newContainerDetails);
       newContainerDetails.appendChild(newContainerDetailsInfo);
       newContainerDetailsInfo.appendChild(newAttractionName);
-      // 加入景點名稱
+      // 加入景點名稱、屬性
       let newNameText = document.createTextNode(
         attractions["data"][i]["name"]
       );
       newAttractionName.appendChild(newNameText);
       newAttractionDOM.appendChild(newAttractionDetail);
+      newAttractionDOM.setAttribute("attraction-id",attractions["data"][i]["id"]);
       newAttractionDetail.appendChild(newDetailsInfo);
       newDetailsInfo.appendChild(newMrtName);
       // 加入mrt
@@ -198,4 +199,18 @@ function loadAttractions() {
       newCategory.appendChild(newCategoryText);
     }
 }
+
+// 以事件委派，抓取景點的冒泡事件並跳轉至該景點頁面的函式
+let attractionGroup = document.querySelector(".attractions__attractions-group");
+attractionGroup.addEventListener('click',function(event){
+  let clickedAttraction = event.target.closest(".attractions-group__attraction");
+  if(clickedAttraction){
+    let attractionId = clickedAttraction.getAttribute("attraction-id");
+    if(attractionId){
+      window.location.href = `/attraction/${attractionId}`;
+    }
+  }
+})
+
+      
 
