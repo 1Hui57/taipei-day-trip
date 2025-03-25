@@ -14,14 +14,115 @@
     <!-- 載入css檔案 -->
     <link rel="stylesheet" href="/public/desktop.css" />
     <link rel="stylesheet" href="/public/attraction.css" />
+    <link rel="stylesheet" href="/public/dialog.css" />
     <!-- 載入JS -->
     <script src="/public/attraction.js" defer></script>
+    <script src="/public/index-dialog.js" defer></script>
   </head>
   <body>
     <div class="attraction-wrapper">
+      <div class="dialog-section display-none" id="dialog-section--signin">
+        <div
+          class="dialog-section__dialog-sign dialog-section__dialog-sign--signin"
+        >
+          <div class="dialog-sign__box--signin">
+            <div class="dialog-sign__decator-bar"></div>
+            <div class="dialog-sign__close-btn">
+              <img
+                src="/public/picture/icon_close.png"
+                id="dialog-close-btn-signin"
+              />
+            </div>
+            <div
+              class="dialog-sign__main dialog-sign__main--signin Header_3_Bold_24"
+            >
+              <div class="dialog-sign__main__text">登入會員帳號</div>
+              <div
+                class="dialog-sign__main__container dialog-sign__main__container--signin"
+              >
+                <input
+                  type="text"
+                  placeholder="輸入電子信箱"
+                  class="dialog-container__input Body_Med_16_500 colorGray"
+                />
+                <input
+                  type="text"
+                  placeholder="輸入密碼"
+                  class="dialog-container__input Body_Med_16_500 colorGray"
+                />
+                <button
+                  class="dialog-container__btn Button_Reg_19 colorWhite"
+                  id="dialogSignInBtn"
+                >
+                  登入帳戶
+                </button>
+                <div
+                  class="dialog-container__sign Body_Med_16_500"
+                  id="signInSection-signUpBtn"
+                >
+                  還沒有帳戶？點此註冊
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dialog-section__dialog-mask"></div>
+      </div>
+      <div class="dialog-section display-none" id="dialog-section--signup">
+        <div
+          class="dialog-section__dialog-sign dialog-section__dialog-sign--signup"
+        >
+          <div class="dialog-sign__box--signup">
+            <div class="dialog-sign__decator-bar"></div>
+            <div class="dialog-sign__close-btn">
+              <img
+                src="/public/picture/icon_close.png"
+                id="dialog-close-btn-signup"
+              />
+            </div>
+            <div
+              class="dialog-sign__main dialog-sign__main--signup Header_3_Bold_24"
+            >
+              <div class="dialog-sign__main__text">註冊會員帳號</div>
+              <div
+                class="dialog-sign__main__container dialog-sign__main__container--signup"
+              >
+                <input
+                  type="text"
+                  placeholder="輸入姓名"
+                  class="dialog-container__input Body_Med_16_500 colorGray"
+                />
+                <input
+                  type="text"
+                  placeholder="輸入電子郵件"
+                  class="dialog-container__input Body_Med_16_500 colorGray"
+                />
+                <input
+                  type="text"
+                  placeholder="輸入密碼"
+                  class="dialog-container__input Body_Med_16_500 colorGray"
+                />
+                <button
+                  class="dialog-container__btn Button_Reg_19 colorWhite"
+                  id="dialogSignUpBtn"
+                >
+                  註冊新帳戶
+                </button>
+                <div
+                  class="dialog-container__sign Body_Med_16_500"
+                  id="signUpSection-signInBtn"
+                >
+                  還沒有帳戶？點此註冊
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dialog-section__dialog-mask"></div>
+      </div>
       <div id="navigation" class="navbar nav__hr-bottom">
         <div class="navbar__navContent">
-          <p id="backToIndex" style="cursor: pointer;">台北一日遊</p>
+          <p id="backToIndex" style="cursor: pointer">台北一日遊</p>
           <div class="navbar__navItem">
             <button class="navItem__btn">預定行程</button>
             <button class="navItem__btn" id="signinBtn">登入/註冊</button>
@@ -71,16 +172,21 @@
             </div>
             <div class="booking-form__filed-time Body_Bold_16 colorGray70">
               選擇時間：
-              <input type="radio" id="am" name="time"  checked/>
+              <input type="radio" id="am" name="time" checked />
               <label for="am" class="Body_Med_16_400 colorGray70">上半天</label>
               <input type="radio" id="pm" name="time" />
               <label for="pm" class="Body_Med_16_400 colorGray70">下半天</label>
             </div>
             <div class="booking-form__filed-price Body_Bold_16 colorGray70">
               導覽費用：
-              <div class="Body_Med_16_400 colorGray70" id="price">新台幣 2000 元</div>
+              <div class="Body_Med_16_400 colorGray70" id="price">
+                新台幣 2000 元
+              </div>
             </div>
-            <button class="booking-form__button Button_Reg_19 colorWhite" id="bookingButton">
+            <button
+              class="booking-form__button Button_Reg_19 colorWhite"
+              id="bookingButton"
+            >
               開始預約行程
             </button>
           </div>
