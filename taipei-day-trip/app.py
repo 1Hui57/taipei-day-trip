@@ -24,13 +24,16 @@ connection_pool = pooling.MySQLConnectionPool(
 # 定義一個函式，可以根據要求字串抓取資料包括所有符合資料的圖片url
 def getAttractionData(cursor, keyword=None, pageStartFrom=0, attractionId=None):
 	if keyword:
+		cursor.execute("SET SESSION group_concat_max_len = 100000;")
 		cursor.execute("SELECT attractions.*, GROUP_CONCAT(attractions_images.url SEPARATOR ',')"
 		"as images FROM attractions LEFT JOIN attractions_images  ON attractions.id=attractions_images.attractions_id "
 		"WHERE mrt=%s OR name LIKE %s GROUP BY attractions.id ORDER BY attractions.id ASC LIMIT %s, %s",[keyword,'%'+keyword+'%',pageStartFrom,12])
 	elif attractionId:
+		cursor.execute("SET SESSION group_concat_max_len = 100000;")
 		cursor.execute("SELECT attractions.*, GROUP_CONCAT(attractions_images.url SEPARATOR ',')"
 		"as images FROM attractions LEFT JOIN attractions_images  ON attractions.id=attractions_images.attractions_id WHERE attractions.id=%s",[attractionId])
 	else:
+		cursor.execute("SET SESSION group_concat_max_len = 100000;")
 		cursor.execute("SELECT attractions.*, GROUP_CONCAT(attractions_images.url SEPARATOR ',')"
 		"as images FROM attractions LEFT JOIN attractions_images  ON attractions.id=attractions_images.attractions_id "
 		" GROUP BY attractions.id ORDER BY attractions.id ASC LIMIT %s, %s",[pageStartFrom,12])

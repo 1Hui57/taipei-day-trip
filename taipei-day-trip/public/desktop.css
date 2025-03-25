@@ -11,18 +11,32 @@ body{
     color:#757575 ;
 }
 
+.colorGray70{
+    color: #666666;
+}
+
+.colorBlack{
+    color: #000000;
+}
+
 button{
     border: 0;
     background-color: #FFFFFF;
 }
 
-.Body_Med_16{
+.Body_Med_16_500{
     font-family: "Noto Sans TC";
     font-weight: 500;
     font-size: 16px;
-    line-height: 13.3px;
     letter-spacing: 0;
-    vertical-align: middle;
+    /* vertical-align: middle; */
+}
+
+.Body_Med_16_400{
+    font-family: "Noto Sans TC";
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0;
 }
 
 .Body_Bold_16{
@@ -38,7 +52,6 @@ button{
     font-family: "Noto Sans TC";
     font-weight: 700;
     font-size: 28px;
-    line-height: 24px;
     letter-spacing: 0;
     display: flex;
     align-items: center;
@@ -57,8 +70,24 @@ button{
     font-family: "Noto Sans TC";
     font-weight: 400;
     font-size: 19px;
-    line-height: 16px;
     letter-spacing: 0;
+    line-height: 16px;
+}
+
+.Button_Bold_19{
+    font-family: "Noto Sans TC";
+    font-weight: 700;
+    font-size: 19px;
+    letter-spacing: 0;
+}
+
+.Content_Reg_16{
+    font-family: "Noto Sans TC";
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0;
+    display: flex;
+    align-items: center;
 }
 
 .justify-content-end{
