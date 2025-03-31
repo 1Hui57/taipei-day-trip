@@ -43,3 +43,11 @@ SELECT attractions.*, GROUP_CONCAT(attractions_images.url SEPARATOR ',')
 		as images FROM attractions LEFT JOIN attractions_images  ON attractions.id=attractions_images.attractions_id 
 		 GROUP BY attractions.id ORDER BY attractions.id ASC LIMIT 0, 12;
 select count(*) from attractions;
+CREATE TABLE user(
+	id INT PRIMARY KEY AUTO_INCREMENT COMMENT 'Unique ID',
+    name VARCHAR(255) NOT NULL COMMENT 'Name',
+	email VARCHAR(255) NOT NULL COMMENT 'Email',
+    password VARCHAR(255) NOT NULL COMMENT 'Password'
+    );
+select * from user;
+

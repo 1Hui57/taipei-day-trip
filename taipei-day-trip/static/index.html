@@ -18,6 +18,7 @@
     <script src="/public/index-mrtList.js" defer></script>
     <script src="/public/index-attractions.js" defer></script>
     <script src="/public/index-dialog.js" defer></script>
+    <!-- <script src="/public/user.js" defer></script> -->
   </head>
   <body>
     <div class="dialog-section display-none" id="dialog-section--signin">
@@ -34,11 +35,13 @@
                 type="text"
                 placeholder="輸入電子信箱"
                 class="dialog-container__input Body_Med_16_500 colorGray"
+                id="signInEmail"
               />
               <input
-                type="text"
+                type="password"
                 placeholder="輸入密碼"
                 class="dialog-container__input Body_Med_16_500 colorGray"
+                id="signInPassword"
               />
               <button
                 class="dialog-container__btn Button_Reg_19 colorWhite"
@@ -72,16 +75,19 @@
                 type="text"
                 placeholder="輸入姓名"
                 class="dialog-container__input Body_Med_16_500 colorGray"
+                id="signUpName"
               />
               <input
                 type="text"
                 placeholder="輸入電子郵件"
                 class="dialog-container__input Body_Med_16_500 colorGray"
+                id="signUpEmail"
               />
               <input
-                type="text"
+                type="password"
                 placeholder="輸入密碼"
                 class="dialog-container__input Body_Med_16_500 colorGray"
+                id="signUpPassword"
               />
               <button
                 class="dialog-container__btn Button_Reg_19 colorWhite"
@@ -93,7 +99,7 @@
                 class="dialog-container__sign Body_Med_16_500"
                 id="signUpSection-signInBtn"
               >
-                還沒有帳戶？點此註冊
+                已經有帳戶了？點此登入
               </div>
             </div>
           </div>

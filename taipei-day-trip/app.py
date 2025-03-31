@@ -8,9 +8,21 @@ import mysql.connector
 from mysql.connector import pooling
 from dotenv import load_dotenv
 import os
+import jwt
+from passlib.context import CryptContext
+from datetime import datetime, timedelta, timezone
+
 
 app=FastAPI()
 load_dotenv()
+# 設定 JWT 參數
+SECRETE_KEY = os.getenv("SECRETE_KEY")  # **請改成更安全的金鑰**
+ALGORITHM = os.getenv("ALGORITHM")
+ACCESS_TOKEN_EXPIRE_HOURS = 24*7  # Token 過期時間
+
+# 密碼加密
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 # 建立連線池
 connection_pool = pooling.MySQLConnectionPool(
 	pool_name="taipei_day_trip",
@@ -131,6 +143,66 @@ async def get_mrt(request:Request):
 		else:
 			continue
 	return {"data":data}
+
+# 註冊帳號
+@app.post("/api/user")
+async def signup(
+	request:Request
+):
+	data = await request.json()
+	connection = connection_pool.get_connection()
+	cursor = connection.cursor()
+	cursor.execute("SELECT * FROM user WHERE email=%s",[data["email"]])
+	userData=cursor.fetchone()
+	if userData==None:
+		# 儲存使用者資料與加密後的密碼到資料庫
+		cursor.execute("INSERT INTO user (name, email, password) VALUES (%s,%s,%s)",[data["name"],data["email"],pwd_context.hash(data["password"])])
+		connection.commit()
+		cursor.close()
+		connection.close()
+		return {"ok": True}
+	elif userData[2]:
+		cursor.close()
+		connection.close()
+		return JSONResponse(status_code=400,content={"error": True,"message":"此Email已註冊"})
+	else:
+		cursor.close()
+		connection.close()
+		return JSONResponse(status_code=500,content={"error": True,"message":"伺服器內部錯誤"})
+	
+# 生成JWT token
+def create_access_token(data:dict):
+    to_encode = data.copy()
+    expire = datetime.now(timezone.utc) +  timedelta(hours=ACCESS_TOKEN_EXPIRE_HOURS)
+    to_encode.update({"exp": expire})
+    return jwt.encode(to_encode, SECRETE_KEY, ALGORITHM)
+
+
+@app.put("/api/user/auth")
+async def signin(
+	request:Request
+):
+	try:
+		data = await request.json()
+		connection = connection_pool.get_connection()
+		cursor = connection.cursor()
+		cursor.execute("SELECT * FROM user WHERE email=%s",[data["email"]])
+		userData=cursor.fetchone()
+		cursor.close()
+		connection.close() 
+		# 如果沒有相同的email
+		if userData is None:
+			return JSONResponse(status_code=400,content={"error": True,"message":"此帳號尚未註冊。"})
+		# 如果密碼正確
+		elif pwd_context.verify(data["password"], userData[3]):
+			resultData = {"id":userData[0],"name":userData[1],"email":userData[2]}
+			return {"token": create_access_token(resultData)}
+		# 如果密碼不正確
+		else:
+			return JSONResponse(status_code=400,content={"error": True,"message":"密碼錯誤。"})
+	except Exception as e:
+		return JSONResponse(status_code=500,content={"error": True,"message":"伺服器內部錯誤。"})
+
 
 # Static Pages (Never Modify Code in this Block)
 @app.get("/", include_in_schema=False)

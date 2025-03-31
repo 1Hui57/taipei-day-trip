@@ -13,7 +13,13 @@ document.addEventListener("DOMContentLoaded", async function (){
     nextPage = attractions["nextPage"];
     //有取得資料就呼叫渲染景點的函式
     loadAttractions();
-    
+    let token = localStorage.getItem("token");
+    if (token) {
+      console.log("Token 存在:", token);
+    }
+    else{
+      console.log("沒有token")
+    }
 })
 
 let scrollTriggerItem = document.getElementById("scrollTriggerItem");
