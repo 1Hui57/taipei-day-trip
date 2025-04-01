@@ -9,6 +9,7 @@ from mysql.connector import pooling
 from dotenv import load_dotenv
 import os
 import jwt
+from jwt import ExpiredSignatureError, InvalidTokenError
 from passlib.context import CryptContext
 from datetime import datetime, timedelta, timezone
 
@@ -144,7 +145,14 @@ async def get_mrt(request:Request):
 			continue
 	return {"data":data}
 
-# 註冊帳號
+# 生成JWT token
+def create_access_token(data:dict):
+    to_encode = data.copy()
+    expire = datetime.now(timezone.utc) +  timedelta(hours=ACCESS_TOKEN_EXPIRE_HOURS)
+    to_encode.update({"exp": expire})
+    return jwt.encode(to_encode, SECRETE_KEY, ALGORITHM)
+
+# 註冊帳號API
 @app.post("/api/user")
 async def signup(
 	request:Request
@@ -170,14 +178,7 @@ async def signup(
 		connection.close()
 		return JSONResponse(status_code=500,content={"error": True,"message":"伺服器內部錯誤"})
 	
-# 生成JWT token
-def create_access_token(data:dict):
-    to_encode = data.copy()
-    expire = datetime.now(timezone.utc) +  timedelta(hours=ACCESS_TOKEN_EXPIRE_HOURS)
-    to_encode.update({"exp": expire})
-    return jwt.encode(to_encode, SECRETE_KEY, ALGORITHM)
-
-
+# 登入API
 @app.put("/api/user/auth")
 async def signin(
 	request:Request
@@ -199,10 +200,29 @@ async def signin(
 			return {"token": create_access_token(resultData)}
 		# 如果密碼不正確
 		else:
-			return JSONResponse(status_code=400,content={"error": True,"message":"密碼錯誤。"})
+			return JSONResponse(status_code=400,content={"error": True,"message":"帳號或密碼錯誤。"})
 	except Exception as e:
 		return JSONResponse(status_code=500,content={"error": True,"message":"伺服器內部錯誤。"})
 
+# 確認使用者登入狀態API
+@app.get("/api/user/auth")
+async def getUserState(
+	request:Request
+):
+	authorization = request.headers.get("Authorization")
+	if authorization and authorization.startswith("Bearer"):
+		token = authorization.replace("Bearer ", "").strip()
+		try:				
+			tokenVerifyData = jwt.decode(token, SECRETE_KEY, algorithms=["HS256"])
+			print(tokenVerifyData)
+			return{"data":tokenVerifyData}
+		except ExpiredSignatureError:
+			return {"data":None}
+		except InvalidTokenError:
+			return {"data":None}
+	else:
+		print("None")
+		return {"data":None}
 
 # Static Pages (Never Modify Code in this Block)
 @app.get("/", include_in_schema=False)

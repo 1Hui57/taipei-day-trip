@@ -40,6 +40,8 @@ signUpSectionSignUpBtn.addEventListener('click', function(){
 // 使用者註冊
 let UserSignUpButton = document.getElementById("dialogSignUpBtn");
 let dialog_sign__main__container_signup = document.querySelector(".dialog-sign__main__container--signup");
+// 設定 email 格式
+const emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
 // 監聽註冊按鈕
 UserSignUpButton.addEventListener("click", async function(){
     let signUpUserName = document.getElementById("signUpName").value;
@@ -49,6 +51,10 @@ UserSignUpButton.addEventListener("click", async function(){
     // 如任何欄位空白，出現警告
     if (!signUpUserName|| !signUpUserEmail || !signUpUserPassword){
         showAlert("請輸入姓名、信箱及密碼以註冊帳號。",dialog_sign__main__container_signup,UserSignUpButton);
+        return;
+    }
+    else if(!emailRule.test(signUpUserEmail)){
+        showAlert("請輸入正確信箱格式。",dialog_sign__main__container_signup,UserSignUpButton);
         return;
     }
     // 如有輸入資料，送出連線至後端確認
