@@ -8,12 +8,39 @@ let currentKeyword = null;
 let isLoading = false;
 
 document.addEventListener("DOMContentLoaded", async function (){
-    let response = await fetch("/api/attractions?page=0");
-    attractions = await response.json();
-    nextPage = attractions["nextPage"];
-    //有取得資料就呼叫渲染景點的函式
-    loadAttractions();
-    
+  let response = await fetch("/api/attractions?page=0");
+  attractions = await response.json();
+  nextPage = attractions["nextPage"];
+  // 檢查是否有登入token
+  let token = localStorage.getItem("token");
+  // 送出連線，有token則送出，沒有則無
+  let userResponse = await fetch("/api/user/auth",{
+    method:"GET",
+    headers:{
+      "Content-Type": "application/json",
+      "Authorization": token? `Bearer ${token}`:"" 
+    }
+  });
+  // 得到後端回傳資料{"data":{"id":1....}}or{"data":None}
+  let userData = await userResponse.json();
+  let signinBtn = document.getElementById("signinBtn");
+  let signOutBtn = document.getElementById("signOutBtn");
+  // 如有資料代表使用者為登入狀態，顯示登出按鈕
+  if(userData.data){
+    signinBtn.classList.add("display-none");
+    signOutBtn.classList.remove("display-none");
+    signOutBtn.addEventListener('click',function(){
+      localStorage.removeItem("token");
+      window.location.reload();
+    })
+  }
+  // 如資料為None，代表未登入系統，顯示登入按鈕
+  else{
+    signinBtn.classList.remove("display-none");
+    signOutBtn.classList.add("display-none");
+  }
+  //有取得資料就呼叫渲染景點的函式
+  loadAttractions();
 })
 
 let scrollTriggerItem = document.getElementById("scrollTriggerItem");
