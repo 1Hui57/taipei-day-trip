@@ -224,6 +224,41 @@ async def getUserState(
 		print("None")
 		return {"data":None}
 
+# POST方法 /api/booking 建立新的預定行程
+@app.post("/api/booking")
+async def createBooking(
+	request:Request
+):
+	data = await request.json()
+	print(data)
+	return {"ok":True}
+	
+
+
+
+
+# GET方法 /api/booking 取得尚未確認下單的行程
+
+
+
+
+# DELETE方法 /api/booking 刪除目前的預定行程
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Static Pages (Never Modify Code in this Block)
 @app.get("/", include_in_schema=False)
 async def index(request: Request):
