@@ -12,6 +12,8 @@ import jwt
 from jwt import ExpiredSignatureError, InvalidTokenError
 from passlib.context import CryptContext
 from datetime import datetime, timedelta, timezone
+from datetime import date
+
 
 
 app=FastAPI()
@@ -214,7 +216,7 @@ async def getUserState(
 		token = authorization.replace("Bearer ", "").strip()
 		try:				
 			tokenVerifyData = jwt.decode(token, SECRETE_KEY, algorithms=["HS256"])
-			print(tokenVerifyData)
+			# print(tokenVerifyData)
 			return{"data":tokenVerifyData}
 		except ExpiredSignatureError:
 			return {"data":None}
@@ -229,9 +231,36 @@ async def getUserState(
 async def createBooking(
 	request:Request
 ):
-	data = await request.json()
-	print(data)
-	return {"ok":True}
+	try:
+		data = await request.json()
+		authorization = request.headers.get("Authorization")
+		if authorization and authorization.startswith("Bearer"):
+			token = authorization.replace("Bearer ", "").strip()
+			try:				
+				tokenVerifyData = jwt.decode(token, SECRETE_KEY, algorithms=["HS256"])
+				if data["attractionId"] !="" and data["date"] !="" and data["time"]!="" and data["price"]!="":
+					# 取得今天的日期
+					today = date.today()
+					# 將使用者選擇的日期格式從字串轉換為datetime格式
+					dataDate = datetime.strptime(data["date"], "%Y-%m-%d").date()
+					if dataDate<today:
+						return JSONResponse(status_code=400, content={
+							"error":True,
+							"message":"請選擇今天以後的時間。"
+						})
+					return {"ok":True}
+				else:
+					return JSONResponse(status_code=400, content={"error":True,"message":"請選擇時間。"})
+			except ExpiredSignatureError:
+				return JSONResponse(status_code=403, content={"error":True,"message":"請登入系統再進行預訂。"})	
+			except InvalidTokenError:
+				return JSONResponse(status_code=403, content={"error":True,"message":"請登入系統再進行預訂。"})	
+		else:
+			return JSONResponse(status_code=403, content={"error":True,"message":"請登入系統再進行預訂。"})	
+	except Exception as e:
+		return JSONResponse(status_code=500, content={"error":True,"message":"伺服器內部錯誤。"})	
+	
+	
 	
 
 

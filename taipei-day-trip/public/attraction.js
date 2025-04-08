@@ -202,6 +202,9 @@ document.getElementById("backToIndex").addEventListener('click',function(){
 //預訂行程
 const bookingButton = document.getElementById("bookingButton");
 bookingButton.addEventListener('click',async function(){
+  // 清除多的警告
+  let bookingErrorText = document.getElementById("bookingErrorText");
+  if(bookingErrorText){bookingErrorText.remove()}
   // 檢查是否有token，若無則跳出登入視窗
   let token = localStorage.getItem("token");
   if (token===null){
@@ -226,24 +229,22 @@ bookingButton.addEventListener('click',async function(){
       method:"POST",
       headers:{
         "Content-Type": "application/json",
+        "Authorization": token? `Bearer ${token}`:""
       },
       body:JSON.stringify(bookingData)
     })
     let data = await bookingResponse.json();
-    console.log(data);
+    if(data["error"]){
+      // 跳出錯誤訊息
+      let newSpan = document.createElement("span");
+      newSpan.id="bookingErrorText";
+      let newErrorText = document.createTextNode(data["message"]);
+      newSpan.appendChild(newErrorText);
+      newSpan.className="Body_Bold_16 colorRed";
+      let profile__booking_form = document.querySelector(".profile__booking-form");
+      profile__booking_form.appendChild(newSpan);
+    }
   }
 })
 
 
-    // if(!bookingDate.value){
-    //   console.log("沒有選日期");
-    //   let newSpan = document.createElement("span");
-    //   let newText = document.createTextNode("請選擇日期再預定。");
-    //   newSpan.appendChild(newText);
-    //   newSpan.className="Body_Bold_16 colorRed";
-    //   let bookingDateDiv = document.querySelector(".booking-form__filed-date");
-    //   bookingDateDiv.appendChild(newSpan);
-    // }
-    // else{
-    //   console.log(bookingDate.value);
-    // }

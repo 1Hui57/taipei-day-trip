@@ -161,6 +161,10 @@
     cursor: pointer;
 }
 
+.errorText{
+    margin-top: 3px;
+}
+
 @media(max-width:645px){
     .section{
         flex-direction: column;
