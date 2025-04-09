@@ -154,6 +154,19 @@ def create_access_token(data:dict):
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRETE_KEY, ALGORITHM)
 
+# 解析JWT token
+def decodeJWT(JWTtoken):
+	token = JWTtoken.replace("Bearer ", "").strip()
+	try:
+		tokenVerifyData = jwt.decode(token, SECRETE_KEY, ALGORITHM)
+		# print(tokenVerifyData)
+		return{"data":tokenVerifyData}
+	except ExpiredSignatureError:
+		return {"data":None}
+	except InvalidTokenError:
+		return {"data":None}
+
+
 # 註冊帳號API
 @app.post("/api/user")
 async def signup(
@@ -238,6 +251,7 @@ async def createBooking(
 			token = authorization.replace("Bearer ", "").strip()
 			try:				
 				tokenVerifyData = jwt.decode(token, SECRETE_KEY, algorithms=["HS256"])
+				print(tokenVerifyData)
 				if data["attractionId"] !="" and data["date"] !="" and data["time"]!="" and data["price"]!="":
 					# 取得今天的日期
 					today = date.today()
@@ -248,6 +262,13 @@ async def createBooking(
 							"error":True,
 							"message":"請選擇今天以後的時間。"
 						})
+					connection = connection_pool.get_connection()
+					cursor = connection.cursor()
+					cursor.execute("REPLACE INTO booking (user_id, attraction_id, date, time, price) " \
+					"VALUES (%s,%s,%s,%s,%s)",[tokenVerifyData["id"], data["attractionId"],data["date"],data["time"],data["price"]])
+					connection.commit()
+					cursor.close()
+					connection.close()
 					return {"ok":True}
 				else:
 					return JSONResponse(status_code=400, content={"error":True,"message":"請選擇時間。"})
@@ -260,13 +281,52 @@ async def createBooking(
 	except Exception as e:
 		return JSONResponse(status_code=500, content={"error":True,"message":"伺服器內部錯誤。"})	
 	
-	
-	
-
-
-
-
 # GET方法 /api/booking 取得尚未確認下單的行程
+@app.get("/api/booking")
+async def getBooking(request:Request):
+	authorization = request.headers.get("Authorization")
+	if authorization and authorization.startswith("Bearer"):
+		userData = decodeJWT(authorization)
+		userId = userData["data"]["id"]
+		userName = userData["data"]["name"]
+		userEmail = userData["data"]["email"]
+		connection = connection_pool.get_connection()
+		cursor = connection.cursor()
+		cursor.execute("""SELECT booking.*,attractions.name, attractions.address, MIN(attractions_images.url) 
+			FROM booking LEFT JOIN attractions ON booking.attraction_id=attractions.id
+    		LEFT JOIN attractions_images ON booking.attraction_id=attractions_images.attractions_id
+			WHERE booking.user_id = %s GROUP BY booking.id, attractions.id""",[userId])
+		bookingData=cursor.fetchone()
+		cursor.close()
+		connection.close() 
+		attractionId = bookingData[2]
+		attractionName = bookingData[6]
+		attractionAddress = bookingData[7]
+		attractionImage = bookingData[8]
+		bookingdate = bookingData[3]
+		bookingTime = bookingData[4]
+		bookingPrice = bookingData[5]
+		resultData = {
+			"data":{
+				"attraction":{
+					"id":attractionId,
+					"name":attractionName,
+					"address":attractionAddress,
+					"image":attractionImage
+				},
+				"date":bookingdate,
+				"time":bookingTime,
+				"price":bookingPrice
+			}
+		}
+		return resultData
+	else:
+		return {
+  			"error": True,
+ 			"message": "請按照情境提供對應的錯誤訊息"
+		}
+	
+
 
 
 

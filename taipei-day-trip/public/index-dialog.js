@@ -134,3 +134,26 @@ function removeAlert() {
     if (signAlert) signAlert.remove();
 }
 
+// 預定按鈕
+let navBookingBtn = document.getElementById("navBookingBtn");
+navBookingBtn.addEventListener('click',async function(){
+    let token = localStorage.getItem("token");
+    let response = await fetch("/api/user/auth",{
+        method:"GET",
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": token? `Bearer ${token}`:""
+        },
+    })
+    let data = await response.json();
+    console.log(data);
+    if(data["data"]===null){
+        let dialog_section__signin = document.getElementById("dialog-section--signin");
+        console.log(dialog_section__signin);
+        dialog_section__signin.classList.remove("display-none");
+    }
+    else{
+        window.location.href ="/booking";
+    }
+})
+

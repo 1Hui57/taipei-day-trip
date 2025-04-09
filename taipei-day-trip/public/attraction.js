@@ -199,6 +199,7 @@ document.getElementById("backToIndex").addEventListener('click',function(){
   window.location.href ="/";
 })
 
+
 //預訂行程
 const bookingButton = document.getElementById("bookingButton");
 bookingButton.addEventListener('click',async function(){
@@ -243,6 +244,9 @@ bookingButton.addEventListener('click',async function(){
       newSpan.className="Body_Bold_16 colorRed";
       let profile__booking_form = document.querySelector(".profile__booking-form");
       profile__booking_form.appendChild(newSpan);
+    }
+    else{
+      window.location.href ="/booking";
     }
   }
 })
