@@ -48,6 +48,9 @@ document.addEventListener("DOMContentLoaded", async function (){
             // 渲染圖片
             let section__picture__img = document.querySelector(".section__picture__img");
             section__picture__img.src = "/public/picture/no-bookingPicture.jpg";
+            // 刪除景點資訊部分
+            let section__infor = document.querySelector(".section__infor");
+            section__infor.remove();
             // 隱藏"刪除按鈕"
             let section__delete = document.querySelector(".section__delete");
             section__delete.classList.add("display-none");
