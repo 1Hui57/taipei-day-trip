@@ -299,41 +299,61 @@ async def getBooking(request:Request):
 		bookingData=cursor.fetchone()
 		cursor.close()
 		connection.close() 
-		attractionId = bookingData[2]
-		attractionName = bookingData[6]
-		attractionAddress = bookingData[7]
-		attractionImage = bookingData[8]
-		bookingdate = bookingData[3]
-		bookingTime = bookingData[4]
-		bookingPrice = bookingData[5]
-		resultData = {
-			"data":{
-				"attraction":{
-					"id":attractionId,
-					"name":attractionName,
-					"address":attractionAddress,
-					"image":attractionImage
-				},
-				"date":bookingdate,
-				"time":bookingTime,
-				"price":bookingPrice
+		if bookingData == None:
+			return{"data":None}
+		else:
+			attractionId = bookingData[2]
+			attractionName = bookingData[6]
+			attractionAddress = bookingData[7]
+			attractionImage = bookingData[8]
+			bookingdate = bookingData[3]
+			bookingTime = bookingData[4]
+			bookingPrice = bookingData[5]
+			resultData = {
+				"data":{
+					"attraction":{
+						"id":attractionId,
+						"name":attractionName,
+						"address":attractionAddress,
+						"image":attractionImage
+					},
+					"date":bookingdate,
+					"time":bookingTime,
+					"price":bookingPrice
+				}
 			}
-		}
-		return resultData
+			return resultData
 	else:
 		return {
   			"error": True,
- 			"message": "請按照情境提供對應的錯誤訊息"
+ 			"message": "尚未登入系統。"
 		}
 	
-
-
-
-
-
 # DELETE方法 /api/booking 刪除目前的預定行程
+@app.delete("/api/booking")
+async def deleteBooking(request:Request):
+	authorization = request.headers.get("Authorization")
+	print(authorization)
+	if authorization and authorization.startswith("Bearer"):
+		try:
+			userData = decodeJWT(authorization)
+			print(userData)
+			userId = userData["data"]["id"]
+			print(userData["data"]["id"])
+			connection = connection_pool.get_connection()
+			cursor = connection.cursor()
+			cursor.execute("DELETE FROM booking WHERE user_id=%s",[userId])
+			connection.commit()
+			cursor.close()
+			connection.close()
+			return {"ok":True}
+		except Exception as e:
+			return JSONResponse(status_code=403, content={"error":True,"message":"尚未登入系統。"})
+	else:
+		return JSONResponse(status_code=403, content={"error":True,"message":"尚未登入系統。"})
 
 
+	
 
 
 

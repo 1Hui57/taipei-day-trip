@@ -1,3 +1,4 @@
+
 // 載入頁面
 document.addEventListener("DOMContentLoaded", async function (){
     // 檢查是否有登入token
@@ -36,8 +37,38 @@ document.addEventListener("DOMContentLoaded", async function (){
         })
         // 得到後端回傳資料
         let bookingData = await bookingResponse.json();
-        if(bookingData["data"]){
-            console.log(bookingData["data"]);
+        //如果沒有預定資料，渲染沒有預定資料的頁面
+        if (bookingData["data"]===null){
+            // 渲染標題:還沒有預定行程
+            let headline__text_container = document.querySelector(".headline__text-container");
+            let newSpan = document.createElement("span");
+            let newWelcomeText = document.createTextNode(`您好，${userName}，您目前還沒有預定行程唷`);
+            newSpan.appendChild(newWelcomeText);
+            headline__text_container.appendChild(newSpan);
+            // 渲染圖片
+            let section__picture__img = document.querySelector(".section__picture__img");
+            section__picture__img.src = "/public/picture/no-bookingPicture.jpg";
+            // 隱藏"刪除按鈕"
+            let section__delete = document.querySelector(".section__delete");
+            section__delete.classList.add("display-none");
+            // // 隱藏個人資訊DOM
+            // let contactForm = document.querySelector(".contact-form");
+            // let payment = document.querySelector(".payment");
+            // contactForm.classList.add("display-none");
+            // payment.classList.add("display-none");
+            // // 隱藏分隔線
+            // let booking__hr = document.querySelectorAll(".booking__hr");
+            // booking__hr.forEach(element=>{
+            //     element.classList.add("display-none")
+            // });
+            // 隱藏確認訂購部分DOM
+            let confirm = document.querySelector(".confirm");
+            confirm.classList.add("display-none");
+
+        }
+        // 有預訂資料，渲染畫面
+        else if(bookingData["data"]){
+            console.log(bookingData);
             // 整理得到的預訂資料
             let attractionId = bookingData["data"]["attraction"]["id"];
             let attractionName = bookingData["data"]["attraction"]["name"];
@@ -83,10 +114,8 @@ document.addEventListener("DOMContentLoaded", async function (){
             let userEmailDOM = document.getElementById("userEmail");
             userEmailDOM.placeholder=userEmail;
         }
-        
-
     }
-    // 如資料為None，代表未登入系統，回到首頁
+    // 如使用者資料為None，代表未登入系統，回到首頁
     else{
         window.location.href ="/";
     }
@@ -96,3 +125,18 @@ document.addEventListener("DOMContentLoaded", async function (){
 document.getElementById("backToIndex").addEventListener('click',function(){
     window.location.href ="/";
   })
+
+// 刪除目前預定按鈕
+let deleteBookingBtn = document.getElementById("deleteBookingBtn");
+deleteBookingBtn.addEventListener('click',async function(){
+    let token = localStorage.getItem("token");
+    let deleteResponse = await fetch("/api/booking",{
+        method:"DELETE",
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": token? `Bearer ${token}`:"" 
+        }
+    })
+    let deleteData = await deleteResponse.json();
+    window.location.href ="/booking";
+})
