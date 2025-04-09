@@ -239,5 +239,8 @@ attractionGroup.addEventListener('click',function(event){
   }
 })
 
-      
+// 回首頁按鈕
+document.getElementById("backToIndex").addEventListener('click',function(){
+  window.location.href ="/";
+})      
 

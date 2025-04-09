@@ -69,7 +69,7 @@ UserSignUpButton.addEventListener("click", async function(){
          })
         });
         let data = await response.json();
-        console.log(data);
+        // console.log(data);
         if(data["ok"]){
             showAlert("註冊成功，請登入。",dialog_sign__main__container_signup,UserSignUpButton);
         }
@@ -105,7 +105,7 @@ UserSignInBtn.addEventListener('click', async function(){
         });
         let data = await response.json();
         if(data["token"]){
-            console.log(data.token);
+            // console.log(data.token);
             localStorage.setItem("token", data.token); // 儲存 Token
             window.location.reload(); // 重新整理目前頁面
         }
@@ -146,14 +146,13 @@ navBookingBtn.addEventListener('click',async function(){
         },
     })
     let data = await response.json();
-    console.log(data);
+    // console.log(data);
     if(data["data"]===null){
         let dialog_section__signin = document.getElementById("dialog-section--signin");
-        console.log(dialog_section__signin);
+        // console.log(dialog_section__signin);
         dialog_section__signin.classList.remove("display-none");
     }
     else{
         window.location.href ="/booking";
     }
 })
-
