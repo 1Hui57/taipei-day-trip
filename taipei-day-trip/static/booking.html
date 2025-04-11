@@ -12,25 +12,163 @@
     rel="stylesheet"
   />
   <!-- 載入css檔案 -->
-  <link rel="stylesheet" href="../public/desktop.css" />
-  <link rel="stylesheet" href="../public/booking.css" />
+  <link rel="stylesheet" href="/public/desktop.css" />
+  <link rel="stylesheet" href="/public/booking.css" />
+  <link rel="stylesheet" href="/public/dialog.css" />
+  <!-- 載入JS -->
+  <script src="/public/index-dialog.js" defer></script>
+  <script src="/public/booking.js" defer></script>
 </head>
 <body>
-  div id="navigation" class="navbar">
+  <div class="dialog-section display-none" id="dialog-section--signin">
+    <div class="dialog-section__dialog-sign dialog-section__dialog-sign--signin">
+      <div class="dialog-sign__box--signin">
+        <div class="dialog-sign__decator-bar"></div>
+        <div class="dialog-sign__close-btn">
+          <img src="/public/picture/icon_close.png" id="dialog-close-btn-signin" />
+        </div>
+        <div class="dialog-sign__main dialog-sign__main--signin Header_3_Bold_24">
+          <div class="dialog-sign__main__text">登入會員帳號</div>
+          <div class="dialog-sign__main__container dialog-sign__main__container--signin">
+            <input
+              type="email"
+              placeholder="輸入電子信箱"
+              class="dialog-container__input Body_Med_16_500 colorGray"
+              id="signInEmail"
+            />
+            <input
+              type="password"
+              placeholder="輸入密碼"
+              class="dialog-container__input Body_Med_16_500 colorGray"
+              id="signInPassword"
+            />
+            <button
+              class="dialog-container__btn Button_Reg_19 colorWhite"
+              id="dialogSignInBtn"
+            >
+              登入帳戶
+            </button>
+            <div
+              class="dialog-container__sign Body_Med_16_500"
+              id="signInSection-signUpBtn"
+            >
+              還沒有帳戶？點此註冊
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dialog-section__dialog-mask"></div>
+  </div>
+  <div class="dialog-section display-none" id="dialog-section--signup">
+    <div class="dialog-section__dialog-sign dialog-section__dialog-sign--signup">
+      <div class="dialog-sign__box--signup">
+        <div class="dialog-sign__decator-bar"></div>
+        <div class="dialog-sign__close-btn">
+          <img src="/public/picture/icon_close.png" id="dialog-close-btn-signup" />
+        </div>
+        <div class="dialog-sign__main dialog-sign__main--signup Header_3_Bold_24">
+          <div class="dialog-sign__main__text">註冊會員帳號</div>
+          <div class="dialog-sign__main__container dialog-sign__main__container--signup">
+            <input
+              type="text"
+              placeholder="輸入姓名"
+              class="dialog-container__input Body_Med_16_500 colorGray"
+              id="signUpName"
+            />
+            <input
+              type="email"
+              placeholder="輸入電子郵件"
+              class="dialog-container__input Body_Med_16_500 colorGray"
+              id="signUpEmail"
+            />
+            <input
+              type="password"
+              placeholder="輸入密碼"
+              class="dialog-container__input Body_Med_16_500 colorGray"
+              id="signUpPassword"
+            />
+            <button
+              class="dialog-container__btn Button_Reg_19 colorWhite"
+              id="dialogSignUpBtn"
+            >
+              註冊新帳戶
+            </button>
+            <div
+              class="dialog-container__sign Body_Med_16_500"
+              id="signUpSection-signInBtn"
+            >
+              已經有帳戶了？點此登入
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dialog-section__dialog-mask"></div>
+  </div>
+  <div id="navigation" class="navbar nav__hr-bottom">
     <div class="navbar__navContent">
-      <p>台北一日遊</p>
+      <p id="backToIndex" style="cursor: pointer">台北一日遊</p>
       <div class="navbar__navItem">
-        <button class="navItem__btn">預定行程</button>
+        <button class="navItem__btn" id="navBookingBtn">預定行程</button>
         <button class="navItem__btn" id="signinBtn">登入/註冊</button>
+        <button class="navItem__btn display-none" id="signOutBtn">退出系統</button>
       </div>
     </div>
   </div>
-  <hr style="border: 1px solid #E8E8E8; margin-top: 0;height: fit-content;box-sizing: border-box;">
   <div class="headline Button_Bold_19 colorGray70">
-    <span>您好，</span>
-    <span>Melody</span>
-    <span>，待預訂的行程如下：</span>
+    <div class="headline__text-container">
+    </div>
   </div>
-  
+  <div class="section">
+    <div class="section__picture">
+      <img  class="section__picture__img">
+    </div>
+    <div class="section__infor">
+      <div class="section__infor__title Body_Bold_16 colorGreenBlue"></div>
+      <div class="section__infor__item Body_Med_16_400 colorGray70" id="bookingDate"></div>
+      <div class="section__infor__item Body_Med_16_400 colorGray70" id="bookingTime"></div>
+      <div class="section__infor__item Body_Med_16_400 colorGray70" id="bookingPrice"></div>
+      <div class="section__infor__item Body_Med_16_400 colorGray70" id="bookingAddress"></div>
+    </div>
+    <div class="section__delete">
+      <img src="../public/picture/icon_delete.png" id="deleteBookingBtn" >
+    </div>
+  </div>
+  <div class="booking__hr"></div>
+  <div class="contact-form">
+    <div class="contact-form__title Body_Bold_19 colorGray70">您的聯絡資訊</div>
+    <div class="contact-form__item Body_Med_16_400 colorGray70">聯絡姓名：
+      <input type="text" class="contact-form__item__input Body_Med_16_500 colorBlack" id="userName">
+    </div>
+    <div class="contact-form__item Body_Med_16_400 colorGray70">聯絡信箱：
+      <input type="text" class="contact-form__item__input Body_Med_16_500 colorBlack" id="userEmail">
+    </div>
+    <div class="contact-form__item Body_Med_16_400 colorGray70">手機號碼：
+      <input type="text" class="contact-form__item__input Body_Med_16_500 colorBlack">
+    </div>
+    <div class="contact-form__notice Body_Bold_16 colorGray70">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
+  </div>
+  <div class="booking__hr"></div>
+  <div class="payment">
+    <div class="payment__title Body_Bold_19 colorGray70">信用卡付款資訊</div>
+    <div class="payment__item Body_Med_16_400 colorGray70">卡片號碼：
+      <input type="number" placeholder="**** **** **** ****" class="payment__item__input Body_Med_16_500 colorGray" >
+    </div>
+    <div class="payment__item Body_Med_16_400 colorGray70">過期時間：
+      <input type="text" placeholder="MM / YY"class="payment__item__input Body_Med_16_500 colorGray" >
+    </div>
+    <div class="payment__item Body_Med_16_400 colorGray70">驗證密碼：
+      <input type="text" placeholder="CVV" class="payment__item__input Body_Med_16_500 colorGray">
+    </div>
+  </div>
+  <div class="booking__hr"></div>
+  <div class="confirm">
+    <div class="confirm__field Body_Bold_16 colorGray70">總價：新台幣 2000 元</div>
+    <div class="confirm__btn Button_Reg_19">確認訂購並付款</div>
+  </div>
+  <div class="footer">
+    <div class="Body_Bold_16 colorWhite">COPYRIGHT © 2021 台北一日遊</div>
+  </div>
 </body>
 </html>

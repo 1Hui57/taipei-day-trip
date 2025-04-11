@@ -1,12 +1,12 @@
 // 宣告會用到的變數
 let attraction;
 let imagesNum;
+// 取得當前頁面的 URL
+let url = window.location.pathname; // 例如 "/attraction/55"
+let id = url.split("/").pop(); // 取得attractionId
 
 // 網頁載入，送出連線資料
 document.addEventListener("DOMContentLoaded", async function () {
-  // 取得當前頁面的 URL
-  let url = window.location.pathname; // 例如 "/attraction/55"
-  let id = url.split("/").pop(); // 取得attractionId
   let response = await fetch(`/api/attraction/${id}`);
   let data = await response.json();
   if(data["data"]){
@@ -132,8 +132,8 @@ function noAtrractionData(){
 }
 
 //調整價錢
-let radioAM = document.getElementById("am");
-let radioPM = document.getElementById("pm");
+let radioAM = document.getElementById("morning");
+let radioPM = document.getElementById("afternoon");
 let price = document.getElementById("price");
 
 radioAM.addEventListener("change", radioChangePrice);
@@ -198,4 +198,57 @@ function circleChange(){
 document.getElementById("backToIndex").addEventListener('click',function(){
   window.location.href ="/";
 })
+
+
+//預訂行程
+const bookingButton = document.getElementById("bookingButton");
+bookingButton.addEventListener('click',async function(){
+  // 清除多的警告
+  let bookingErrorText = document.getElementById("bookingErrorText");
+  if(bookingErrorText){bookingErrorText.remove()}
+  // 檢查是否有token，若無則跳出登入視窗
+  let token = localStorage.getItem("token");
+  if (token===null){
+    let dialog_section__signin = document.getElementById("dialog-section--signin");
+    dialog_section__signin.classList.remove("display-none");
+  }
+  else{
+    // 抓取選取的日期
+    let bookingDate = document.getElementById("bookingDate");
+    // 抓取選取的時間
+    let timeRadio = document.querySelector('input[name="time"]:checked');
+    // 抓取價錢
+    let price = (timeRadio.id==="morning") ? 2000:2500;
+    // 將資訊包裝，有可能沒有選擇日期。
+    let bookingData = {
+      "attractionId":id,
+      "date":bookingDate.value,
+      "time":timeRadio.id,
+      "price":price
+    }
+    let bookingResponse = await fetch("/api/booking",{
+      method:"POST",
+      headers:{
+        "Content-Type": "application/json",
+        "Authorization": token? `Bearer ${token}`:""
+      },
+      body:JSON.stringify(bookingData)
+    })
+    let data = await bookingResponse.json();
+    if(data["error"]){
+      // 跳出錯誤訊息
+      let newSpan = document.createElement("span");
+      newSpan.id="bookingErrorText";
+      let newErrorText = document.createTextNode(data["message"]);
+      newSpan.appendChild(newErrorText);
+      newSpan.className="Body_Bold_16 colorRed";
+      let profile__booking_form = document.querySelector(".profile__booking-form");
+      profile__booking_form.appendChild(newSpan);
+    }
+    else{
+      window.location.href ="/booking";
+    }
+  }
+})
+
 

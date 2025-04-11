@@ -19,6 +19,14 @@ body{
     color: #000000;
 }
 
+.colorGreenBlue{
+    color: #448899;
+}
+
+.colorRed{
+    color: rgb(190, 35, 35);
+}
+
 button{
     border: 0;
     background-color: #FFFFFF;
@@ -43,6 +51,15 @@ button{
     font-family: "Noto Sans TC";
     font-weight: 700;
     font-size: 16px;
+    letter-spacing: 0;
+    display: flex;
+    align-items: center;
+}
+
+.Body_Bold_19{
+    font-family: "Noto Sans TC";
+    font-weight: 700;
+    font-size: 19px;
     letter-spacing: 0;
     display: flex;
     align-items: center;
@@ -110,6 +127,10 @@ button{
     position: sticky;
     top:0;
     z-index: 1000;
+}
+
+.nav__hr-bottom{
+    border-bottom:1px solid #E8E8E8;
 }
 
 .navbar__navContent{
