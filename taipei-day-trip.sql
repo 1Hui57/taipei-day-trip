@@ -23,8 +23,8 @@ SHOW TABLES;
 SELECT * FROM attractions;
 SELECT * FROM attractions_images;
 SET SQL_SAFE_UPDATES=0;
-DROP TABLE attractions;
-DROP TABLE attractions_images;
+# DROP TABLE attractions;
+# DROP TABLE attractions_images;
 
 SELECT COUNT(*) FROM  attractions WHERE name="劍潭" OR mrt LIKE '%劍潭%' ORDER BY id ASC;
 SELECT * FROM attractions WHERE name="劍潭" OR mrt LIKE '%劍潭%' ORDER BY id ASC LIMIT 0, 12;
@@ -50,4 +50,46 @@ CREATE TABLE user(
     password VARCHAR(255) NOT NULL COMMENT 'Password'
     );
 select * from user;
+INSERT INTO user(id,name,email,password) VALUES (1,"aaa","aaa","aaa");
+SELECT * FROM user WHERE email="bbb";
+DROP TABLE user;
+CREATE TABLE booking(
+	id INT PRIMARY KEY AUTO_INCREMENT COMMENT 'Unique ID',
+    user_id INT NOT NULL UNIQUE COMMENT 'User ID',
+    attraction_id INT COMMENT 'Attraction ID',
+    date VARCHAR(255) NOT NULL COMMENT 'Date',
+    time VARCHAR(255) NOT NULL COMMENT 'Time',
+    price INT NOT NULL COMMENT 'Price',
+    FOREIGN KEY (attraction_id) REFERENCES attractions(id),
+    FOREIGN KEY (user_id) REFERENCES user(id)
+);
+DROP TABLE booking;
+SELECT * FROM booking;
+SELECT booking.*,attractions.name, attractions.address, MIN(attractions_images.url) 
+	FROM booking LEFT JOIN attractions ON booking.attraction_id=attractions.id 
+    LEFT JOIN attractions_images ON booking.attraction_id=attractions_images.attractions_id
+    WHERE booking.user_id = 1
+    GROUP BY booking.id, attractions.id;
+DELETE FROM booking WHERE user_id=2;
 
+CREATE TABLE orders(
+	id INT PRIMARY KEY AUTO_INCREMENT COMMENT 'Unique ID',
+    order_no VARCHAR(255) COMMENT 'Order ID',
+    user_id INT NOT NULL COMMENT 'User ID',
+    attraction_id INT NOT NULL COMMENT 'Attraction ID',
+    date VARCHAR(255) NOT NULL COMMENT 'Date',
+    time VARCHAR(255) NOT NULL COMMENT 'Time',
+    price INT NOT NULL COMMENT 'Price',
+    contact_name VARCHAR(255) NOT NULL COMMENT 'Contact Name',
+    contact_email VARCHAR(255) NOT NULL COMMENT 'Contact Email',
+    contact_phone VARCHAR(255) NOT NULL COMMENT 'Contact Phone',
+    pay VARCHAR(255) DEFAULT 'no' COMMENT 'Pay',
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (attraction_id) REFERENCES attractions(id),
+    FOREIGN KEY (user_id) REFERENCES user(id)
+);
+DROP TABLE orders;
+SELECT * from orders;
+
+INSERT INTO orders (user_id, attraction_id, date, time, price, contact_name, contact_email, contact_phone) 
+	VALUES(2,2,"2025-04-25","afternoon",2500,"哈哈","melody@melody.com",0905470420);

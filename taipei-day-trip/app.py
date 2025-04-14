@@ -13,13 +13,15 @@ from jwt import ExpiredSignatureError, InvalidTokenError
 from passlib.context import CryptContext
 from datetime import datetime, timedelta, timezone
 from datetime import date
+import httpx
+
 
 
 
 app=FastAPI()
 load_dotenv()
 # 設定 JWT 參數
-SECRETE_KEY = os.getenv("SECRETE_KEY")  # **請改成更安全的金鑰**
+SECRETE_KEY = os.getenv("SECRETE_KEY") 
 ALGORITHM = os.getenv("ALGORITHM")
 ACCESS_TOKEN_EXPIRE_HOURS = 24*7  # Token 過期時間
 
@@ -35,6 +37,10 @@ connection_pool = pooling.MySQLConnectionPool(
     password=os.getenv("DB_PASSWORD"),
     database=os.getenv("DB_NAME")
 )
+
+# TAPPY KEY & MERCHANT ID
+PARTNER_KEY = os.getenv("PARTNER_KEY")
+MERCHANT_ID = os.getenv("MERCHANT_ID")
 
 # 定義一個函式，可以根據要求字串抓取資料包括所有符合資料的圖片url
 def getAttractionData(cursor, keyword=None, pageStartFrom=0, attractionId=None):
@@ -352,7 +358,47 @@ async def deleteBooking(request:Request):
 	else:
 		return JSONResponse(status_code=403, content={"error":True,"message":"尚未登入系統。"})
 
-
+# POST 方法 /api/order
+@app.post("/api/orders")
+async def createOrders(request:Request):
+	# 預訂資訊
+	data = await request.json()
+	prime = data["prime"]
+	orderPrice = data["order"]["price"]
+	orderAttractionId = data["order"]["trip"]["attraction"]["id"]
+	orderDate = data["order"]["trip"]["date"]
+	orderTime = data["order"]["trip"]["time"]
+	orderContactName = data["order"]["contact"]["name"]
+	orderContactEmail = data["order"]["contact"]["email"]
+	orderContactPhone = data["order"]["contact"]["phone"]
+	# 解析TOKEN
+	authorization = request.headers.get("Authorization")
+	if authorization and authorization.startswith("Bearer"):
+		try:
+			userData = decodeJWT(authorization)
+			userId = userData["data"]["id"]
+			connection = connection_pool.get_connection()
+			cursor = connection.cursor()
+			cursor.execute("DELETE FROM booking WHERE user_id=%s",[userId])
+			# connection.commit()
+			cursor.execute("""INSERT INTO orders (user_id, attraction_id, date, time,
+				price, contact_name, contact_email, contact_phone) 
+				VALUES(%s,%s,%s,%s,%s,%s,%s,%s)""",
+				[userId,orderAttractionId,orderDate,orderTime,orderPrice,
+	   			orderContactName,orderContactEmail,orderContactPhone])
+			# 建立訂單編號
+			order_id = cursor.lastrowid
+			today_date=datetime.now().strftime("%Y%m%d")
+			order_no=str(today_date)+"-u"+str(userId)+"-"+str(order_id)
+			cursor.execute("UPDATE orders set order_no=%s WHERE id=%s",[order_no, order_id])
+			connection.commit()
+			cursor.close()
+			connection.close()
+			return {"ok":True}
+		except Exception as e:
+			return JSONResponse(status_code=403, content={"error":True,"message":"尚未登入系統。"})
+	else:
+		return JSONResponse(status_code=403, content={"error":True,"message":"尚未登入系統。"})
 	
 
 

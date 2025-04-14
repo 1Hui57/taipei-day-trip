@@ -277,7 +277,7 @@ document.getElementById("paymentBtn").addEventListener('click',async function(){
                 }
             })
         });
-        let orderData = await response.json();
+        let orderData = await orderResponse.json();
 
     });
 })
