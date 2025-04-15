@@ -84,7 +84,6 @@ document.addEventListener("DOMContentLoaded", async function (){
         }
         // 有預訂資料，渲染畫面
         else if(bookingData["data"]){
-            console.log(bookingData);
             // 整理得到的預訂資料
             attractionId = bookingData["data"]["attraction"]["id"];
             attractionName = bookingData["data"]["attraction"]["name"];
@@ -228,9 +227,12 @@ TPDirect.card.setup({
 
 // 按下按鈕送出信用卡資訊
 document.getElementById("paymentBtn").addEventListener('click',async function(){
-
-    // 取得輸入的手機號碼
+    // 取得輸入的手機號碼，如空值，跳出警告
     userPhone = document.getElementById("userPhone").value;
+    if(userPhone===""){
+        alert('請輸入手機號碼ˋ^ˊ')
+        return
+    }
     // 取得 TapPay Fields 的 status
     const tappayStatus = TPDirect.card.getTappayFieldsStatus();
 
@@ -243,11 +245,11 @@ document.getElementById("paymentBtn").addEventListener('click',async function(){
     TPDirect.card.getPrime(async function(result){
         // 如果得到錯誤
         if (result.status !== 0) {
-            alert('get prime error ' + result.msg)
+            // alert('get prime error ' + result.msg)
             return
         }
         // 如果卡號正確，獲得prime
-        alert('get prime 成功，prime: ' + result.card.prime)
+        // alert('get prime 成功，prime: ' + result.card.prime)
         let token = localStorage.getItem("token");
         let orderResponse = await fetch("/api/orders",{
             method:"POST",
@@ -278,6 +280,6 @@ document.getElementById("paymentBtn").addEventListener('click',async function(){
             })
         });
         let orderData = await orderResponse.json();
-
+        window.location.href =`/thankyou?number=${orderData["data"]["number"]}`;
     });
 })
