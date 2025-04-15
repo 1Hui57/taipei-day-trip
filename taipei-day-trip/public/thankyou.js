@@ -50,6 +50,15 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     });
     let orderData = await orderResponse.json();
+    // 查詢錯誤的訂單編號，資料庫無資料
+    if(orderData["error"] && orderData["message"]==="查無此筆訂單。"){
+        let thankyou = document.querySelector(".thankyou");
+        let thankyou__info = document.querySelector(".thankyou__info");
+        thankyou.removeChild(thankyou__info);
+        let statusText = document.getElementById("statusText");
+        let newStatusText = document.createTextNode(`您好，${userName}，查無此筆訂單。`);
+        statusText.appendChild(newStatusText);
+    }
     let data = orderData["data"];
     // 整理取得的訂單資料
     let orderPrice = data["price"];

@@ -469,6 +469,7 @@ async def getOrders(request:Request,orderNumber:str):
 		except Exception as e:
 			return JSONResponse(status_code=403, content={"error":True,"message":"尚未登入系統。"})
 	# 取得訂單資料
+	
 	connection = connection_pool.get_connection()
 	cursor = connection.cursor()
 	cursor.execute("""
@@ -479,7 +480,10 @@ async def getOrders(request:Request,orderNumber:str):
 	orderData=cursor.fetchone()
 	cursor.close()
 	connection.close()
-	if orderData[10]=="PAID":
+	# 查無訂單資料
+	if orderData is None:
+		return JSONResponse(status_code=400, content={"error":True,"message":"查無此筆訂單。"})
+	elif orderData[10]=="PAID":
 		orderStatus = 0
 	else:
 		orderStatus = 1
