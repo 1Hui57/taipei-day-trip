@@ -10,7 +10,7 @@ let bookingPrice;
 let userId;
 let userName;
 let userEmail;
-let userPhone;
+
 
 // 載入頁面
 document.addEventListener("DOMContentLoaded", async function (){
@@ -228,9 +228,11 @@ TPDirect.card.setup({
 // 按下按鈕送出信用卡資訊
 document.getElementById("paymentBtn").addEventListener('click',async function(){
     // 取得輸入的手機號碼，如空值，跳出警告
-    userPhone = document.getElementById("userPhone").value;
-    if(userPhone===""){
-        alert('請輸入手機號碼ˋ^ˊ')
+    let inputPhone = document.getElementById("userPhone").value;
+    let inputName = document.getElementById("userName").value;
+    let inputEmail = document.getElementById("userEmail").value;
+    if(inputPhone==="" ||inputName===""||inputEmail===""){
+        alert('請輸入聯絡資訊ˋ^ˊ')
         return
     }
     // 取得 TapPay Fields 的 status
@@ -272,9 +274,9 @@ document.getElementById("paymentBtn").addEventListener('click',async function(){
                         "time":bookingTime
                     },
                     "contact":{
-                        "name":userName,
-                        "email":userEmail,
-                        "phone":userPhone
+                        "name":inputName,
+                        "email":inputEmail,
+                        "phone":inputPhone
                     }
                 }
             })
