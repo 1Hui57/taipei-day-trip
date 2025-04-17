@@ -13,13 +13,15 @@ from jwt import ExpiredSignatureError, InvalidTokenError
 from passlib.context import CryptContext
 from datetime import datetime, timedelta, timezone
 from datetime import date
+import httpx
+
 
 
 
 app=FastAPI()
 load_dotenv()
 # 設定 JWT 參數
-SECRETE_KEY = os.getenv("SECRETE_KEY")  # **請改成更安全的金鑰**
+SECRETE_KEY = os.getenv("SECRETE_KEY") 
 ALGORITHM = os.getenv("ALGORITHM")
 ACCESS_TOKEN_EXPIRE_HOURS = 24*7  # Token 過期時間
 
@@ -35,6 +37,10 @@ connection_pool = pooling.MySQLConnectionPool(
     password=os.getenv("DB_PASSWORD"),
     database=os.getenv("DB_NAME")
 )
+
+# TAPPY KEY & MERCHANT ID
+PARTNER_KEY = os.getenv("PARTNER_KEY")
+MERCHANT_ID = os.getenv("MERCHANT_ID")
 
 # 定義一個函式，可以根據要求字串抓取資料包括所有符合資料的圖片url
 def getAttractionData(cursor, keyword=None, pageStartFrom=0, attractionId=None):
@@ -292,10 +298,10 @@ async def getBooking(request:Request):
 		userEmail = userData["data"]["email"]
 		connection = connection_pool.get_connection()
 		cursor = connection.cursor()
-		cursor.execute("""SELECT booking.*,attractions.name, attractions.address, MIN(attractions_images.url) 
+		cursor.execute("""SELECT booking.*,attractions.name, attractions.address, (SELECT url FROM attractions_images
+			WHERE attractions_id=booking.attraction_id	ORDER BY id ASC LIMIT 1 ) AS image_url
 			FROM booking LEFT JOIN attractions ON booking.attraction_id=attractions.id
-    		LEFT JOIN attractions_images ON booking.attraction_id=attractions_images.attractions_id
-			WHERE booking.user_id = %s GROUP BY booking.id, attractions.id""",[userId])
+			WHERE booking.user_id = %s """,[userId])
 		bookingData=cursor.fetchone()
 		cursor.close()
 		connection.close() 
@@ -352,8 +358,158 @@ async def deleteBooking(request:Request):
 	else:
 		return JSONResponse(status_code=403, content={"error":True,"message":"尚未登入系統。"})
 
-
+# POST 方法 /api/order
+@app.post("/api/orders")
+async def createOrders(request:Request):
+	# 預訂資訊
+	data = await request.json()
+	prime = data["prime"]
+	orderPrice = data["order"]["price"]
+	orderAttractionId = data["order"]["trip"]["attraction"]["id"]
+	orderDate = data["order"]["trip"]["date"]
+	orderTime = data["order"]["trip"]["time"]
+	orderContactName = data["order"]["contact"]["name"]
+	orderContactEmail = data["order"]["contact"]["email"]
+	orderContactPhone = data["order"]["contact"]["phone"]
+	# 解析TOKEN
+	authorization = request.headers.get("Authorization")
+	if authorization and authorization.startswith("Bearer"):
+		try:
+			userData = decodeJWT(authorization)
+			userId = userData["data"]["id"]
+		except Exception as e:
+			return JSONResponse(status_code=403, content={"error":True,"message":"尚未登入系統。"})
+		connection = connection_pool.get_connection()
+		cursor = connection.cursor()
+		try:
+			# 刪除預訂中資料
+			cursor.execute("DELETE FROM booking WHERE user_id=%s",[userId])
+			# 建立訂單(不包含訂單編號)
+			cursor.execute("""
+					INSERT INTO orders (user_id, attraction_id, date, time,price, 
+					contact_name, contact_email, contact_phone) 
+					VALUES(%s,%s,%s,%s,%s,%s,%s,%s)""",
+					[userId,orderAttractionId,orderDate,orderTime,orderPrice,
+					orderContactName,orderContactEmail,orderContactPhone])
+			# 更新訂單編號
+			order_id = cursor.lastrowid
+			today_date=datetime.now().strftime("%Y%m%d")
+			order_no=str(today_date)+"u"+str(userId)+"-"+str(order_id)
+			cursor.execute("UPDATE orders SET order_no=%s WHERE id=%s",[order_no, order_id])
+			connection.commit()
+			cursor.close()
+			connection.close()
+		except Exception as e:
+			cursor.close()
+			connection.close()
+			return JSONResponse(status_code=400, content={"error":True,"message":"訂單建立失敗"})
+		# 送出tap pay POST 請求
+		async with httpx.AsyncClient() as client:
+			tapPayResponse = await client.post(
+				"https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime",
+				headers={
+					"Content-Type": "application/json",
+					"x-api-key": PARTNER_KEY, 
+				},
+				json={
+					"prime":prime,
+					"partner_key":PARTNER_KEY,
+					"merchant_id":MERCHANT_ID,
+					"details":"TapPay Test",
+					"amount":orderPrice,
+					"cardholder":{
+						"phone_number":orderContactPhone,
+						"name":orderContactName,
+						"email":orderContactEmail
+					},
+					"remember": False
+				}
+			)
+			tappayData = tapPayResponse.json()
+			# print(tappayData)
+			# 付款成功，將Pay改為PAID，且將tappay交易識別碼存入資料庫
+			if tappayData["status"]==0:
+				connection = connection_pool.get_connection()
+				cursor = connection.cursor()
+				cursor.execute("UPDATE orders SET pay='PAID', payment_record=%s WHERE order_no=%s",[tappayData["rec_trade_id"],order_no])
+				connection.commit()
+				cursor.close()
+				connection.close()
+				return {
+					"data":{
+						"number":order_no,
+						"payment":{
+							"status":tappayData["status"],
+							"message":"付款成功"
+						}
+					}
+				}
+			# 付款失敗
+			return {
+				"data":{
+					"number":order_no,
+					"payment":{
+						"status":tappayData["status"],
+						"message":"付款失敗"
+					}
+				}
+			}
+	else:
+		return JSONResponse(status_code=403, content={"error":True,"message":"尚未登入系統。"})
 	
+
+@app.get("/api/orders/{orderNumber}")
+async def getOrders(request:Request,orderNumber:str):
+	# 解析TOKEN
+	authorization = request.headers.get("Authorization")
+	if authorization and authorization.startswith("Bearer"):
+		try:
+			userData = decodeJWT(authorization)
+			userId = userData["data"]["id"]
+		except Exception as e:
+			return JSONResponse(status_code=403, content={"error":True,"message":"尚未登入系統。"})
+	# 取得訂單資料
+	
+	connection = connection_pool.get_connection()
+	cursor = connection.cursor()
+	cursor.execute("""
+				SELECT orders.*,attractions.name, attractions.address, (SELECT url FROM attractions_images
+				WHERE attractions_id=orders.attraction_id ORDER BY id ASC LIMIT 1) AS image_url
+				FROM orders LEFT JOIN attractions ON orders.attraction_id=attractions.id
+				WHERE orders.order_no=%s""",[orderNumber])
+	orderData=cursor.fetchone()
+	cursor.close()
+	connection.close()
+	# 查無訂單資料
+	if orderData is None:
+		return JSONResponse(status_code=400, content={"error":True,"message":"查無此筆訂單。"})
+	elif orderData[10]=="PAID":
+		orderStatus = 0
+	else:
+		orderStatus = 1
+	return {
+		"data":{
+			"number":orderNumber,
+			"price":orderData[6],
+			"trip":{
+				"attraction":{
+					"id":orderData[3],
+					"name":orderData[13],
+					"address":orderData[14],
+					"image":orderData[15]
+				},
+				"date":orderData[4],
+				"time":orderData[5]
+			},
+			"contact":{
+				"name":orderData[7],
+				"email":orderData[8],
+				"phone":orderData[9]
+			},
+			"status":orderStatus,
+			"userId":orderData[2]
+		}
+	}
 
 
 

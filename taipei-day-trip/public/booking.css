@@ -124,6 +124,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 15px; 
+    
 }
 
 .payment__item__input{
@@ -163,6 +164,14 @@
 
 .errorText{
     margin-top: 3px;
+}
+
+.tpfield {
+    height: 38px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #E8E8E8;
 }
 
 @media(max-width:645px){

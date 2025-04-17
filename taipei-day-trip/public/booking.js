@@ -1,4 +1,17 @@
 
+// 會用到的變數
+let attractionId;
+let attractionName;
+let attractionAddress;
+let attractionImage;
+let booingDate;
+let bookingTime;
+let bookingPrice;
+let userId;
+let userName;
+let userEmail;
+
+
 // 載入頁面
 document.addEventListener("DOMContentLoaded", async function (){
     // 檢查是否有登入token
@@ -24,9 +37,9 @@ document.addEventListener("DOMContentLoaded", async function (){
         window.location.reload();
         })
         // 取得使用者資料
-        let userId = userData["data"]["id"];
-        let userName =  userData["data"]["name"];
-        let userEmail =  userData["data"]["email"];
+        userId = userData["data"]["id"];
+        userName =  userData["data"]["name"];
+        userEmail =  userData["data"]["email"];
         // 送出GET方法 /api/booking連線
         const bookingResponse = await fetch("/api/booking",{
             method:"GET",
@@ -71,15 +84,14 @@ document.addEventListener("DOMContentLoaded", async function (){
         }
         // 有預訂資料，渲染畫面
         else if(bookingData["data"]){
-            console.log(bookingData);
             // 整理得到的預訂資料
-            let attractionId = bookingData["data"]["attraction"]["id"];
-            let attractionName = bookingData["data"]["attraction"]["name"];
-            let attractionAddress = bookingData["data"]["attraction"]["address"];
-            let attractionImage = bookingData["data"]["attraction"]["image"];
-            let booingDate = bookingData["data"]["date"];
-            let bookingTime = bookingData["data"]["time"];
-            let bookingPrice = bookingData["data"]["price"];
+            attractionId = bookingData["data"]["attraction"]["id"];
+            attractionName = bookingData["data"]["attraction"]["name"];
+            attractionAddress = bookingData["data"]["attraction"]["address"];
+            attractionImage = bookingData["data"]["attraction"]["image"];
+            booingDate = bookingData["data"]["date"];
+            bookingTime = bookingData["data"]["time"];
+            bookingPrice = bookingData["data"]["price"];
             // 渲染得到的資料
             // 您好，Melody，待預定的行程如下：
             let headline__text_container = document.querySelector(".headline__text-container");
@@ -111,11 +123,11 @@ document.addEventListener("DOMContentLoaded", async function (){
             let bookingAddressDOM = document.getElementById("bookingAddress");
             let newbookingAddressText = document.createTextNode(`地點： ${attractionAddress} `);
             bookingAddressDOM.appendChild(newbookingAddressText);
-            //使用者聯絡資料 姓名&信箱
+            //使用者聯絡資料 姓名&信箱，以value添加而不是placeholder
             let userNameDOM = document.getElementById("userName");
-            userNameDOM.placeholder=userName;
+            userNameDOM.value=userName;
             let userEmailDOM = document.getElementById("userEmail");
-            userEmailDOM.placeholder=userEmail;
+            userEmailDOM.value=userEmail;
         }
     }
     // 如使用者資料為None，代表未登入系統，回到首頁
@@ -142,4 +154,134 @@ deleteBookingBtn.addEventListener('click',async function(){
     })
     let deleteData = await deleteResponse.json();
     window.location.href ="/booking";
+})
+
+// tap pay程式區塊
+TPDirect.setupSDK(159806, 'app_lOIzSdM7vPHElll1lTMRZe8nJPmA3yfQ7unbRmbXpoZI2UtjuuqYvZ9udKrV', 'sandbox');
+
+// Display ccv field
+let fields = {
+    number: {
+        // css selector
+        element: '#card-number',
+        placeholder: '**** **** **** ****'
+    },
+    expirationDate: {
+        // DOM object
+        element: document.getElementById('card-expiration-date'),
+        placeholder: 'MM / YY'
+    },
+    ccv: {
+        element: '#card-ccv',
+        placeholder: 'CCV'
+    }
+};
+// 設定外觀
+TPDirect.card.setup({
+    fields: fields,
+    styles: {
+        // Style all elements
+        'input': {
+            'color': '#666666'
+        },
+        // Styling ccv field
+        'input.ccv': {
+            'font-size': '16px','font-weight':'500','font-family':"Noto Sans TC"
+        },
+        // Styling expiration-date field
+        'input.expiration-date': {
+            'font-size': '16px','font-weight':'500','font-family':"Noto Sans TC"
+        },
+        // Styling card-number field
+        'input.card-number': {
+            'font-size': '16px','font-weight':'500','font-family':"Noto Sans TC"
+        },
+        // style focus state
+        ':focus': {
+            'color': 'black'
+        },
+        // style valid state
+        '.valid': {
+            'color': 'green'
+        },
+        // style invalid state
+        '.invalid': {
+            'color': 'red'
+        },
+        // Media queries
+        // Note that these apply to the iframe, not the root window.
+        '@media screen and (max-width: 400px)': {
+            'input': {
+                'color': 'orange'
+            }
+        }
+    },
+    // 此設定會顯示卡號輸入正確後，會顯示前六後四碼信用卡卡號
+    isMaskCreditCardNumber: true,
+    maskCreditCardNumberRange: {
+        beginIndex: 0,
+        endIndex: 11
+    }
+}
+)
+
+// 按下按鈕送出信用卡資訊
+document.getElementById("paymentBtn").addEventListener('click',async function(){
+    // 取得輸入的手機號碼，如空值，跳出警告
+    let inputPhone = document.getElementById("userPhone").value;
+    let inputName = document.getElementById("userName").value;
+    let inputEmail = document.getElementById("userEmail").value;
+    if(inputPhone==="" ||inputName===""||inputEmail===""){
+        alert('請輸入聯絡資訊ˋ^ˊ')
+        return
+    }
+    // 取得 TapPay Fields 的 status
+    const tappayStatus = TPDirect.card.getTappayFieldsStatus();
+
+    // 確認是否可以 getPrime
+    if (tappayStatus.canGetPrime === false) {
+        alert('請輸入正確信用卡資訊ˋ^ˊ')
+        return
+    }
+    // Get prime
+    TPDirect.card.getPrime(async function(result){
+        // 如果得到錯誤
+        if (result.status !== 0) {
+            // alert('get prime error ' + result.msg)
+            return
+        }
+        // 如果卡號正確，獲得prime
+        // alert('get prime 成功，prime: ' + result.card.prime)
+        let token = localStorage.getItem("token");
+        let orderResponse = await fetch("/api/orders",{
+            method:"POST",
+            headers:{
+            "Content-Type": "application/json",
+            "Authorization": token? `Bearer ${token}`:"" 
+            },
+            body:JSON.stringify({
+                "prime":result.card.prime,
+                "order":{
+                    "price":bookingPrice,
+                    "trip":{
+                        "attraction":{
+                            "id":attractionId,
+                            "name":attractionName,
+                            "address":attractionAddress,
+                            "image":attractionImage
+                        },
+                        "date":booingDate,
+                        "time":bookingTime
+                    },
+                    "contact":{
+                        "name":inputName,
+                        "email":inputEmail,
+                        "phone":inputPhone
+                    }
+                }
+            })
+        });
+        let orderData = await orderResponse.json();
+        window.location.href =`/thankyou?number=${orderData["data"]["number"]}`;
+    });
 })

@@ -4,8 +4,142 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thank You</title>
+  <!-- Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap"
+    rel="stylesheet"
+  />
+  <!-- 載入css檔案 -->
+  <link rel="stylesheet" href="/public/desktop.css" />
+  <link rel="stylesheet" href="/public/dialog.css" />
+  <link rel="stylesheet" href="/public/thankyou.css">
+  <!-- 載入JS -->
+  <script src="/public/index-dialog.js" defer></script>
+  <script src="/public/thankyou.js" defer></script>
 </head>
 <body>
-  
+  <div class="thanyou-content">
+    <div class="dialog-section display-none" id="dialog-section--signin">
+      <div class="dialog-section__dialog-sign dialog-section__dialog-sign--signin">
+        <div class="dialog-sign__box--signin">
+          <div class="dialog-sign__decator-bar"></div>
+          <div class="dialog-sign__close-btn">
+            <img src="/public/picture/icon_close.png" id="dialog-close-btn-signin" />
+          </div>
+          <div class="dialog-sign__main dialog-sign__main--signin Header_3_Bold_24">
+            <div class="dialog-sign__main__text">登入會員帳號</div>
+            <div class="dialog-sign__main__container dialog-sign__main__container--signin">
+              <input
+                type="email"
+                placeholder="輸入電子信箱"
+                class="dialog-container__input Body_Med_16_500 colorGray"
+                id="signInEmail"
+              />
+              <input
+                type="password"
+                placeholder="輸入密碼"
+                class="dialog-container__input Body_Med_16_500 colorGray"
+                id="signInPassword"
+              />
+              <button
+                class="dialog-container__btn Button_Reg_19 colorWhite"
+                id="dialogSignInBtn"
+              >
+                登入帳戶
+              </button>
+              <div
+                class="dialog-container__sign Body_Med_16_500"
+                id="signInSection-signUpBtn"
+              >
+                還沒有帳戶？點此註冊
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dialog-section__dialog-mask"></div>
+    </div>
+    <div class="dialog-section display-none" id="dialog-section--signup">
+      <div class="dialog-section__dialog-sign dialog-section__dialog-sign--signup">
+        <div class="dialog-sign__box--signup">
+          <div class="dialog-sign__decator-bar"></div>
+          <div class="dialog-sign__close-btn">
+            <img src="/public/picture/icon_close.png" id="dialog-close-btn-signup" />
+          </div>
+          <div class="dialog-sign__main dialog-sign__main--signup Header_3_Bold_24">
+            <div class="dialog-sign__main__text">註冊會員帳號</div>
+            <div class="dialog-sign__main__container dialog-sign__main__container--signup">
+              <input
+                type="text"
+                placeholder="輸入姓名"
+                class="dialog-container__input Body_Med_16_500 colorGray"
+                id="signUpName"
+              />
+              <input
+                type="email"
+                placeholder="輸入電子郵件"
+                class="dialog-container__input Body_Med_16_500 colorGray"
+                id="signUpEmail"
+              />
+              <input
+                type="password"
+                placeholder="輸入密碼"
+                class="dialog-container__input Body_Med_16_500 colorGray"
+                id="signUpPassword"
+              />
+              <button
+                class="dialog-container__btn Button_Reg_19 colorWhite"
+                id="dialogSignUpBtn"
+              >
+                註冊新帳戶
+              </button>
+              <div
+                class="dialog-container__sign Body_Med_16_500"
+                id="signUpSection-signInBtn"
+              >
+                已經有帳戶了？點此登入
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dialog-section__dialog-mask"></div>
+    </div>
+    <div id="navigation" class="navbar nav__hr-bottom">
+      <div class="navbar__navContent">
+        <p id="backToIndex" style="cursor: pointer">台北一日遊</p>
+        <div class="navbar__navItem">
+          <button class="navItem__btn" id="navBookingBtn">預定行程</button>
+          <button class="navItem__btn" id="signinBtn">登入/註冊</button>
+          <button class="navItem__btn display-none" id="signOutBtn">退出系統</button>
+        </div>
+      </div>
+    </div>
+    <div class="thankyou">
+      <div class="thankyou__text Body_Bold_19 colorGray70" id="statusText"></div>
+      <div class="thankyou__info">
+        <div class="info__image">
+          <img class="info__image--img">
+        </div>
+        <div class="info__content">
+          <div class="info__content__item Body_Med_16_400 colorGray70" id="attractionName"></div>
+          <div class="info__content__item Body_Med_16_400 colorGray70" id="attractionAddress"></div>
+          <div class="info__content__item Body_Med_16_400 colorGray70" id="date"></div>
+          <div class="info__content__item Body_Med_16_400 colorGray70" id="time"></div>
+          <div class="info__content__item Body_Med_16_400 colorGray70" id="price"></div>
+          <div class="info__content__item Body_Med_16_400 colorGray70" >聯絡人資訊</div>
+          <div class="info__content__item Body_Med_16_400 colorGray70" id="name"></div>
+          <div class="info__content__item Body_Med_16_400 colorGray70" id="phone"></div>
+          <div class="info__content__item Body_Med_16_400 colorGray70" id="email"></div>
+        </div>
+      </div>
+      <div class="thankyou__text Body_Med_16_400 colorGray70">請確認訂單資訊是否正確，如有任何問題，請洽客服專線 0800-000000</div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="Body_Bold_16 colorWhite">COPYRIGHT © 2021 台北一日遊</div>
+  </div>
 </body>
 </html>
