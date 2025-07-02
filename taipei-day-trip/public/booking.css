@@ -1,0 +1,216 @@
+.headline{
+    width: 100%;
+    max-width: 1000px;
+    height: 27px;
+    margin:40px auto 30px auto;
+}
+
+.headline__text-container{
+    max-width:1000px ;
+    width:94.4% ;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section{
+    max-width: 980px;
+    width: 94.4%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.section__picture{
+    width: 250px;
+    height:200px;
+    margin-right: 30px;
+    box-sizing: border-box;
+}
+
+.section__picture__img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.section__infor{
+    flex: 1;
+    height: 170px;
+    box-sizing: border-box;
+}
+
+.section__delete{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+}
+
+.section__infor__title{
+    width: 100%;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section__infor__item{
+    width: 100%;
+    height: 24px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.booking__hr{
+    max-width: 1200px;
+    width: 94.4%;
+    height: 1px;
+    margin: 40px auto 40px auto;
+    background-color: #E8E8E8;
+}
+
+.contact-form{
+    max-width: 980px;
+    width: 94.4%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-form__title{
+    width: 100%;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.contact-form__item{
+    width: 100%;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.contact-form__item__input{
+    width: 200px;
+    height: 38px;
+    border: 1px solid #E8E8E8;
+}
+
+.payment{
+    max-width: 980px;
+    width: 94.4%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.payment__title{
+    width: 100%;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.payment__item{
+    width: 100%;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px; 
+    
+}
+
+.payment__item__input{
+    width: 200px;
+    height: 38px;
+    border: 1px solid #E8E8E8;
+}
+
+.confirm{
+    max-width: 980px;
+    width: 94.4%;
+    height: 100px;
+    margin-bottom: 40px;
+    margin: 0 auto 40px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content:flex-start;
+}
+
+.confirm__field{
+    width: 174px;
+    margin-bottom: 22px;
+}
+
+.confirm__btn{
+    width: 173px;
+    height: 36px;
+    background-color:#448899;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.errorText{
+    margin-top: 3px;
+}
+
+.tpfield {
+    height: 38px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #E8E8E8;
+}
+
+@media(max-width:645px){
+    .section{
+        flex-direction: column;
+        height: fit-content;
+    }
+    
+    .section__picture{
+        width: 100%;
+        height:100%;
+        margin-bottom: 30px;
+        margin-right: 0;
+    }
+    
+    .section__infor{
+        width: 100%;
+        height: 200px;
+        flex: none;
+    }
+    
+    .section__delete{
+        top: auto;
+        bottom: 0;
+    }
+    
+    .section__infor__title{
+        width: 100%;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .section__infor__item{
+        width: 100%;
+        height: 24px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+}

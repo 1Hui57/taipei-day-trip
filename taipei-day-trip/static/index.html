@@ -1,11 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Index</title>
-</head>
-<body>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taipei Day Trip 台北一日遊</title>
+    <!-- 載入css -->
+    <link rel="stylesheet" href="/public/desktop.css" />
+    <link rel="stylesheet" href="/public/index-attractions.css" />
+    <link rel="stylesheet" href="/public/dialog.css" />
+    <!-- Noto Sans TC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="/public/index-mrtList.js" defer></script>
+    <script src="/public/index-attractions.js" defer></script>
+    <script src="/public/index-dialog.js" defer></script>
+    <!-- <script src="/public/user.js" defer></script> -->
+  </head>
+  <body>
+    <div class="dialog-section display-none" id="dialog-section--signin">
+      <div class="dialog-section__dialog-sign dialog-section__dialog-sign--signin">
+        <div class="dialog-sign__box--signin">
+          <div class="dialog-sign__decator-bar"></div>
+          <div class="dialog-sign__close-btn">
+            <img src="/public/picture/icon_close.png" id="dialog-close-btn-signin" />
+          </div>
+          <div class="dialog-sign__main dialog-sign__main--signin Header_3_Bold_24">
+            <div class="dialog-sign__main__text">登入會員帳號</div>
+            <div class="dialog-sign__main__container dialog-sign__main__container--signin">
+              <input
+                type="email"
+                placeholder="輸入電子信箱"
+                class="dialog-container__input Body_Med_16_500 colorGray"
+                id="signInEmail"
+              />
+              <input
+                type="password"
+                placeholder="輸入密碼"
+                class="dialog-container__input Body_Med_16_500 colorGray"
+                id="signInPassword"
+              />
+              <button
+                class="dialog-container__btn Button_Reg_19 colorWhite"
+                id="dialogSignInBtn"
+              >
+                登入帳戶
+              </button>
+              <div
+                class="dialog-container__sign Body_Med_16_500"
+                id="signInSection-signUpBtn"
+              >
+                還沒有帳戶？點此註冊
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dialog-section__dialog-mask"></div>
+    </div>
+    <div class="dialog-section display-none" id="dialog-section--signup">
+      <div class="dialog-section__dialog-sign dialog-section__dialog-sign--signup">
+        <div class="dialog-sign__box--signup">
+          <div class="dialog-sign__decator-bar"></div>
+          <div class="dialog-sign__close-btn">
+            <img src="/public/picture/icon_close.png" id="dialog-close-btn-signup" />
+          </div>
+          <div class="dialog-sign__main dialog-sign__main--signup Header_3_Bold_24">
+            <div class="dialog-sign__main__text">註冊會員帳號</div>
+            <div class="dialog-sign__main__container dialog-sign__main__container--signup">
+              <input
+                type="text"
+                placeholder="輸入姓名"
+                class="dialog-container__input Body_Med_16_500 colorGray"
+                id="signUpName"
+              />
+              <input
+                type="email"
+                placeholder="輸入電子郵件"
+                class="dialog-container__input Body_Med_16_500 colorGray"
+                id="signUpEmail"
+              />
+              <input
+                type="password"
+                placeholder="輸入密碼"
+                class="dialog-container__input Body_Med_16_500 colorGray"
+                id="signUpPassword"
+              />
+              <button
+                class="dialog-container__btn Button_Reg_19 colorWhite"
+                id="dialogSignUpBtn"
+              >
+                註冊新帳戶
+              </button>
+              <div
+                class="dialog-container__sign Body_Med_16_500"
+                id="signUpSection-signInBtn"
+              >
+                已經有帳戶了？點此登入
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dialog-section__dialog-mask"></div>
+    </div>
+    <div id="navigation" class="navbar nav__hr-bottom">
+      <div class="navbar__navContent">
+        <p id="backToIndex" style="cursor: pointer">台北一日遊</p>
+        <div class="navbar__navItem">
+          <button class="navItem__btn" id="navBookingBtn">預定行程</button>
+          <button class="navItem__btn" id="signinBtn">登入/註冊</button>
+          <button class="navItem__btn display-none" id="signOutBtn">退出系統</button>
+        </div>
+      </div>
+    </div>
+    <div id="hero-section" class="hero-section">
+      <img src="/public/picture/welcome.png" alt="loading..." />
+      <div class="slogan">
+        <div class="slogan__content">
+          <div class="slogan__content__slogan">
+            <div class="Header_1_Bold_28 marginBottom15 slogan__text1">
+              輕鬆享受台北一日悠閒
+            </div>
+            <div class="Body_Bold_16 colorWhite slogan__text2">
+              探索每個角落，體驗城市的深度旅遊行程
+            </div>
+          </div>
+          <div class="slogan__content__search">
+            <div class="search__searchBar">
+              <input
+                type="text"
+                placeholder="請輸入景點名稱查詢"
+                class="searchBar__input Body_Bold_16 colorGray"
+                id="searchBar__input"
+              />
+              <div class="searchBar__btn">
+                <img src="/public/picture/icon_search.png" id="searchIcon" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="main">
+      <div class="main__list-bar">
+        <div class="list-bar__container list-bar__container--left">
+          <div class="list-bar__arrow">
+            <img src="/public/picture/arrow left.png" id="leftArrow" />
+          </div>
+        </div>
+        <div class="list-bar__container list-bar__container--center">
+          <div id="listItem-container" class="listItem-container"></div>
+        </div>
+        <div class="list-bar__container list-bar__container--right">
+          <div class="list-bar__arrow">
+            <img src="/public/picture/arrow right .png" id="rightArrow" />
+          </div>
+        </div>
+      </div>
+      <div class="main__attractions">
+        <div
+          class="attractions__attractions-group"
+          id="attractions__attractions-group"
+        ></div>
+      </div>
+    </div>
+    <div class="scrollTriggerItem" id="scrollTriggerItem"></div>
+    <div class="footer">
+      <div class="Body_Bold_16 colorWhite">COPYRIGHT © 2021 台北一日遊</div>
+    </div>
+  </body>
 </html>
