@@ -8,8 +8,7 @@
 - [Contact](#contact)
 
 ## Introduction
-
-Journify is a travel planning platform designed for passionate travelers. Easily create your own personalized itinerary, or share your thoughtfully crafted journeys to inspire others. Discover popular trips and start building your perfect adventure today!
+Taipei Day Trip is a travel platform that helps you easily explore popular attractions in Taipei. You can search for attractions by keyword or quickly find nearby spots based on MRT stations. Once you've found your ideal destination, simply book a guided half-day tour and start your journey hassle-free.
 
 **_Link：_**[http://52.192.204.113:8000/](http://52.192.204.113:8000/)
 
@@ -39,7 +38,6 @@ Journify is a travel planning platform designed for passionate travelers. Easily
 
 ### Database
 - **MySQL**
-- **SQLAlchemy (ORM)**
 
 ### Deployment
 - **AWS EC2 (Ubuntu Server)**
