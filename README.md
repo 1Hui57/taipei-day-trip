@@ -14,6 +14,9 @@ Taipei Day Trip is a travel platform that helps you easily explore popular attra
 
 - Test account : test@test.com
 - Test password : test123
+- Test credit card ： 4242 4242 4242 4242
+- Test expiration date ： 12/34
+- Test card validation code ： 123
 
 ## What Can You Do with Taipei Day Trip?
 
